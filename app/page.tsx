@@ -14,6 +14,8 @@ import satImg from "../assests/home/sat.png";
 import rightImg from "../assests/home/right-icon.png"
 import onlineImg1 from "../assests/home/online-img1.png";
 import onlineImg2 from "../assests/home/online-img2.png";
+import studentImg from "../assests/home/student-img.jpg";
+import productImg from "../assests/home/productive-img.png";
 import {
   Accordion,
   AccordionContent,
@@ -121,8 +123,7 @@ export default function Home() {
               Exams We Support
             </h2>
             <p className="text-md max-w-3xl mx-auto">
-              Get access thousands of practice questions for your choice exams.
-              Get verified past questions and realistic test experience.
+              Get exam-focused practice for JAMB, WAEC, NECO, and SAT using verified past questions and realistic CBT practice tests.
             </p>
           </motion.div>
 
@@ -137,7 +138,7 @@ export default function Home() {
               <h1 className='text-[#CAF0DF]  text-[50px] font-semibold hidden md:flex'>01</h1>
               <Card className=" transition-all  border-none shadow-lg ">
                 <CardContent className="p-6 w-full">
-                  <div className="flex items-start space-x-4 ">
+                  <div className="flex items-start sm:space-x-4 space-y-2 flex-col sm:flex-row ">
                     <div className="">
                       <Image src={jambImg} alt="JAMB" className="w-20 h-20 object-cover" />
                     </div>
@@ -189,7 +190,7 @@ export default function Home() {
             >
               <Card className="transition-all  border-none shadow-lg">
                 <CardContent className="p-6">
-                  <div className="flex items-start space-x-4">
+                  <div className="flex items-start sm:space-x-4 space-y-2 flex-col sm:flex-row ">
                     <div className="">
                       <Image src={waecImg} alt="WAEC" className="w-20 h-20 object-cover" />
                     </div>
@@ -244,7 +245,7 @@ export default function Home() {
             >
               <Card className=" transition-all  border-none shadow-lg">
                 <CardContent className="p-6">
-                  <div className="flex items-start space-x-4">
+                  <div className="flex items-start sm:space-x-4 space-y-2 flex-col sm:flex-row ">
                     <div className="">
                       <Image src={necoImg} alt="NECO" className="w-20 h-20 object-cover" />
                     </div>
@@ -282,7 +283,7 @@ export default function Home() {
               <h1 className='text-[#CAF0DF]  text-[50px] font-semibold hidden sm:flex'>04</h1>
               <Card className=" transition-all  border-none shadow-lg">
                 <CardContent className="p-6">
-                  <div className="flex items-start space-x-4">
+                  <div className="flex items-start sm:space-x-4 space-y-2 flex-col sm:flex-row ">
                     <div className="">
                       <Image src={satImg} alt="SAT" className="w-20 h-20 object-cover" />
                     </div>
@@ -379,7 +380,7 @@ export default function Home() {
       {/* Features Section */}
       <section className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-6">
-          <div className="grid lg:grid-cols-2 gap-16 items-center">
+          <div className="grid lg:grid-cols-3 gap-6 lg:gap-16 items-center">
             <motion.div
               initial={{ opacity: 0, x: -60 }}
               whileInView={{ opacity: 1, x: 0 }}
@@ -387,56 +388,64 @@ export default function Home() {
               transition={{ duration: 0.8 }}
             >
               <div className="relative">
-                <div className="absolute -top-8 -left-8 w-32 h-32 bg-yellow-400 rounded-full -z-10" />
-                <img
-                  src="https://images.pexels.com/photos/3184405/pexels-photo-3184405.jpeg?auto=compress&cs=tinysrgb&w=800"
-                  alt="Students"
-                  className="rounded-3xl w-full"
-                />
+                <h2 className="text-xl  text-[#54CD98] ">
+                  Why Students Choose Us?
+                </h2>
+                <h2 className="text-xl  mb-14 mt-2">
+                  Built to help students learn faster, practice smarter, and
+                  succeed confidently
+                </h2>
+                <div className='space-y-4 '>
+                  <div>
+                    <h3 className="text-xl mb-2 font-medium">
+                      Exam-standard questions
+                    </h3>
+                    <p className="text-[#33383B] text-sm">
+                      Practice with questions that match real exam formats and
+                      difficulty levels, helping you get familiar with what to
+                      expect.
+                    </p>
+                  </div>
+                  <div>
+                    <h3 className="text-xl mb-2 font-medium" >
+                      Mobile-friendly practice
+                    </h3>
+                    <p className="text-[#33383B] text-sm">
+                      Learn anytime, anywhere with a platform optimized for mobile devices, so you can practice on the go without limits.
+                    </p>
+                  </div>
+                </div>
               </div>
             </motion.div>
-
+            <motion.div>
+              <Image src={studentImg} alt="Right Icon" className="rounded-s-full rounded-e-full w-[400px] h-[400px] text-white object-cover" />
+            </motion.div>
             <motion.div
               initial={{ opacity: 0, x: 60 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.8 }}
             >
-              <h2 className="text-4xl font-bold text-gray-900 mb-6">
-                Built to help students learn faster, practice smarter, and
-                succeed confidently
-              </h2>
-              <div className="space-y-6">
+              <div className='space-y-4 '>
                 <div>
-                  <h3 className="text-xl font-bold text-gray-900 mb-2">
-                    Exam-standard questions
+                  <h3 className="text-xl mb-2 font-medium">
+                    Instant answers & explanations
                   </h3>
-                  <p className="text-gray-600">
-                    Practice with questions that match real exam formats and
-                    difficulty levels, helping you get familiar with what to
-                    expect.
+                  <p className="text-[#33383B] text-sm">
+                    Get immediate feedback on every question, with detailed explanations to help you understand mistakes and reinforce learning.
                   </p>
                 </div>
                 <div>
-                  <h3 className="text-xl font-bold text-gray-900 mb-2">
-                    Instant answers & explanation
+                  <h3 className="text-xl mb-2 font-medium" >
+                    Designed for African students
                   </h3>
-                  <p className="text-gray-600">
-                    Get immediate feedback on your answers with detailed
-                    explanations to help you understand concepts better.
-                  </p>
-                </div>
-                <div>
-                  <h3 className="text-xl font-bold text-gray-900 mb-2">
-                    Mobile-friendly practice
-                  </h3>
-                  <p className="text-gray-600">
-                    Study anywhere, anytime with our mobile-optimized platform
-                    that works seamlessly on any device.
+                  <p className="text-[#33383B] text-sm">
+                    Our content is tailored to the needs of African learners, focusing on local exams and learning styles for maximum relevance and results.
                   </p>
                 </div>
               </div>
             </motion.div>
+
           </div>
         </div>
       </section>
@@ -460,7 +469,7 @@ export default function Home() {
                 <Image
                   src={onlineImg2}
                   alt="Image 2"
-                  className="hidden md:flex absolute bottom-0 left-40 top-40  w-[400px]   h-[307px] object-cover rounded-xl shadow-lg z-20"
+                  className="hidden lg:flex absolute bottom-0 left-40 top-40  w-[400px]   h-[307px] object-cover rounded-xl shadow-lg z-20"
                 />
               </div>
             </motion.div>
@@ -593,11 +602,12 @@ export default function Home() {
       <section className="py-20 ">
         <div className="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-8 md:gap-16">
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
+            initial={{ opacity: 0, x: -60 }}
+            whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
             className=" flex-1 "
+
           >
             <div>
               <div className="text-md font-semibold  mb-2">
@@ -687,24 +697,50 @@ export default function Home() {
         </div>
       </section>
 
-      {/* CTA Section with Image */}
-      <section className="py-20 bg-gradient-to-br from-green-100 to-green-50">
-        <div className="max-w-7xl mx-auto px-6">
+
+      {/* Ready to be productive */}
+      <section className="bg-[#CAF0DF] relative mt-16 py-12 lg:py-0">
+        <div className="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-8 md:gap-16">
+
+          {/* Text + Button */}
           <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            whileInView={{ opacity: 1, scale: 1 }}
+            initial={{ opacity: 0, x: -60 }}
+            whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
-            className="relative h-[500px] rounded-3xl overflow-hidden"
+            className="flex flex-col justify-center items-center"
           >
-            <img
-              src="https://images.pexels.com/photos/3762800/pexels-photo-3762800.jpeg?auto=compress&cs=tinysrgb&w=800"
-              alt="Happy student"
-              className="w-full h-full object-cover"
+            <div>
+              <h2 className="text-3xl font-semibold text-gray-900 mb-4">
+                Ready to be more productive with{" "}
+                <span className="text-[#044272]">DOLEARN?</span>
+              </h2>
+              <Button className="bg-[#044272]  rounded-3xl md:inline-flex ">
+                Get Started
+              </Button>
+            </div>
+          </motion.div>
+
+          {/* Image */}
+          <motion.div
+            initial={{ opacity: 0, x: 60 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+            className=" justify-center hidden lg:flex"
+          >
+            <Image
+              src={productImg}
+              alt="Productive Image"
+              className="-mt-24 w-full  object-contain"
             />
           </motion.div>
+
         </div>
       </section>
+
+
+
 
       {/* Footer */}
       <footer className="bg-gray-900 text-white py-12">
