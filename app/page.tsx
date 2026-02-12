@@ -804,7 +804,7 @@ export default function Home() {
             {/* About */}
             <div className='lg:col-span-2'>
               <h4 className="text-white font-semibold mb-4">About DoLearn</h4>
-              <p className="text-sm sm:text-xs text-[#808080] leading-relaxed mb-4">
+              <p className="text-sm  text-[#808080] leading-relaxed mb-4">
                 Your trusted destination for exam preparation and progress tracking.We provide verified questions, real CBT practice, and clear performance insights.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 text-xs sm:text-sm">
@@ -815,7 +815,7 @@ export default function Home() {
             {/* Quick Links */}
             <div>
               <h4 className="text-white font-semibold mb-4">Quick Links</h4>
-              <ul className="space-y-2 text-sm sm:text-xs  text-[#999999]">
+              <ul className="space-y-2 text-sm   text-[#999999]">
                 <li className="hover:text-white cursor-pointer">Inventory</li>
                 <li className="hover:text-white cursor-pointer">
                   Sell your cars
@@ -831,7 +831,7 @@ export default function Home() {
             {/* Working Hours */}
             <div>
               <h4 className="text-white font-semibold mb-4">Working Hour</h4>
-              <ul className="space-y-2 text-sm sm:text-xs  text-[#999999]">
+              <ul className="space-y-2 text-sm   text-[#999999]">
                 <li>Monday - Friday: 8:00 - 19:00</li>
                 <li>Saturday: 8:00 - 17:00</li>
                 <li>Sunday: Closed</li>
@@ -841,7 +841,7 @@ export default function Home() {
             {/* Support */}
             <div>
               <h4 className="text-white font-semibold mb-4">Support</h4>
-              <ul className="space-y-2 text-sm sm:text-xs  text-[#999999]">
+              <ul className="space-y-2 text-sm   text-[#999999]">
                 <li className="hover:text-white cursor-pointer">FAQs</li>
                 <li className="hover:text-white cursor-pointer">
                   Terms & Conditions
