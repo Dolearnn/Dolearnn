@@ -10,11 +10,10 @@ const testimonials = [
     text: "Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. sociosqu ad litora torquent per",
     avatar: "https://randomuser.me/api/portraits/men/32.jpg",
     name: "Sarah Johnson",
-
   },
   {
     id: 2,
-     text: "Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. sociosqu ad litora torquent per",
+    text: "Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. sociosqu ad litora torquent per",
     name: "Sarah Johnson",
     avatar: "https://randomuser.me/api/portraits/women/44.jpg",
   },
@@ -35,34 +34,35 @@ export default function TestimonialSlider() {
 
   const current = testimonials[index];
 
- const variants = {
-  enter: (direction: number) => ({
-    x: direction > 0 ? 200 : -200,
-    opacity: 0,
-    rotate: direction > 0 ? -8 : 8, // 🔥 flipped
-  }),
-  center: {
-    x: 0,
-    opacity: 1,
-    rotate: 3, // 🔥 flipped center rotation
-  },
-  exit: (direction: number) => ({
-    x: direction > 0 ? -200 : 200,
-    opacity: 0,
-    rotate: direction > 0 ? 8 : -8, // 🔥 flipped
-  }),
-};
+  const variants = {
+    enter: (direction: number) => ({
+      x: direction > 0 ? 200 : -200,
+      opacity: 0,
+      rotate: direction > 0 ? -8 : 8,
+    }),
+    center: {
+      x: 0,
+      opacity: 1,
+      rotate: 3,
+    },
+    exit: (direction: number) => ({
+      x: direction > 0 ? -200 : 200,
+      opacity: 0,
+      rotate: direction > 0 ? 8 : -8,
+    }),
+  };
 
+  const swipeConfidenceThreshold = 100;
 
   return (
-    <div className="relative flex items-center justify-center py-24 ">
+    <div className="relative flex items-center justify-center py-24">
 
-      {/* LEFT BUTTON (outside) */}
+      {/* LEFT BUTTON (only on md+ screens) */}
       <button
         onClick={() => paginate(-1)}
-        className="absolute left-[-65px] top-[40px] rounded-full border border-[#044272] -translate-y-1/2 z-30 bg-white p-3 hover:scale-105 transition"
+        className="hidden md:flex absolute left-[-40px] top-[40px] rounded-full border border-[#044272] -translate-y-1/2 z-30 bg-white p-3 hover:scale-105 transition"
       >
-        <ChevronLeft size={16} color="#044272"/>
+        <ChevronLeft size={16} color="#044272" />
       </button>
 
       {/* CARD STACK WRAPPER */}
@@ -94,11 +94,20 @@ export default function TestimonialSlider() {
             animate="center"
             exit="exit"
             transition={{ duration: 0.6, ease: "easeInOut" }}
-            className="relative bg-[#1F4F75] h-[300px]  text-white rounded-2xl p-8 shadow-2xl"
+            className="relative bg-[#1F4F75] h-[300px] text-white rounded-2xl p-8 shadow-2xl cursor-grab"
+            drag="x"
+            dragConstraints={{ left: 0, right: 0 }}
+            dragElastic={0.2}
+            onDragEnd={(e, { offset, velocity }) => {
+              const swipe = offset.x * velocity.x;
+              if (swipe < -swipeConfidenceThreshold) {
+                paginate(1); // swipe left → next
+              } else if (swipe > swipeConfidenceThreshold) {
+                paginate(-1); // swipe right → prev
+              }
+            }}
           >
-            <p className="text-sm sm:text-base leading-relaxed mb-6">
-              {current.text}
-            </p>
+            <p className="text-sm sm:text-base leading-relaxed mb-6">{current.text}</p>
 
             <div className="border-t border-white/30 pt-4 flex items-center justify-between">
               <div className="flex items-center gap-3">
@@ -107,24 +116,19 @@ export default function TestimonialSlider() {
                   alt={current.name}
                   className="w-10 h-10 rounded-full object-cover"
                 />
-                <span className="text-sm font-medium">
-                  {current.name}
-                </span>
+                <span className="text-sm font-medium">{current.name}</span>
               </div>
 
-              <div className="flex text-yellow-400 text-xl">
-                ★★★★★
-              </div>
+              <div className="flex text-yellow-400 text-xl">★★★★★</div>
             </div>
           </motion.div>
         </AnimatePresence>
       </div>
 
-      {/* RIGHT BUTTON (outside) */}
+      {/* RIGHT BUTTON (only on md+ screens) */}
       <button
         onClick={() => paginate(1)}
-        className="absolute right-[-75px] top-[40px] rounded-full  bg-[#044272] -translate-y-1/2 z-30 p-3 hover:scale-105 transition"
-
+        className="hidden md:flex absolute right-[-55px] top-[40px] rounded-full bg-[#044272] -translate-y-1/2 z-30 p-3 hover:scale-105 transition"
       >
         <ChevronRight size={20} color="white" />
       </button>
