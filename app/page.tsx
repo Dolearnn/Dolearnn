@@ -16,6 +16,7 @@ import onlineImg1 from "../assests/home/online-img1.png";
 import onlineImg2 from "../assests/home/online-img2.png";
 import studentImg from "../assests/home/student-img.jpg";
 import productImg from "../assests/home/productive-img.png";
+import fullLogo from "../assests/home/full-logo.png";
 import {
   Accordion,
   AccordionContent,
@@ -31,11 +32,16 @@ import {
   Star,
   ArrowRight,
   Check,
+  ArrowUp,
+  ChevronUp,
 } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
 
 export default function Home() {
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
   return (
     <main className="min-h-screen bg-white">
       {/* Navigation */}
@@ -739,44 +745,127 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Newletter */}
+
+      <section className="bg-[#E6ECF1] mt-12">
+        <div className="max-w-7xl mx-auto px-6 py-8">
+          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
+
+            {/* Logo */}
+            <div className="flex items-center gap-2">
+              <Image src={logo} alt="DoLearn Logo" className="w-[150px] h-[28px]" />
+            </div>
+
+            {/* Newsletter Text */}
+            <div className="text-center md:text-left">
+              <h3 className="font-semibold text-gray-800">
+                Subscribe our Newsletter
+              </h3>
+              <p className="text-sm text-[#999999]">
+                We will send you nice letter once per week. No spam.
+              </p>
+            </div>
+
+            {/* Input + Button */}
+            <div className="w-full md:w-auto">
+              <form className="flex flex-col sm:flex-row items-center bg-white rounded-full p-1 shadow-sm">
+                <input
+                  type="email"
+                  placeholder="Your email address"
+                  className="flex-1 w-full px-4 py-2 text-sm outline-none rounded-full"
+                />
+                <button
+                  type="submit"
+                  className="mt-2 sm:mt-0 sm:ml-2 px-6 py-2 text-sm font-medium bg-[#0E4C6E] text-white rounded-full hover:bg-[#08354C] transition-all duration-300"
+                >
+                  Subscribe
+                </button>
+              </form>
+            </div>
+
+          </div>
+        </div>
+      </section>
 
 
 
       {/* Footer */}
-      <footer className="bg-gray-900 text-white py-12">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="grid md:grid-cols-2 gap-8 items-center">
-            <div>
-              <div className="flex items-center space-x-2 mb-4">
-                <div className="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center">
-                  <BookOpen className="w-6 h-6 text-white" />
-                </div>
-                <span className="text-2xl font-bold">DoLearn</span>
+
+      <footer className="bg-[#000A06] text-gray-300 relative">
+        <div className="max-w-7xl mx-auto px-6 py-14">
+          {/* Top Grid */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-10 lg:gap-16">
+            {/* Logo + About */}
+            <div className="">
+              <div className="flex items-center gap-2 mb-4">
+                <Image src={fullLogo} alt="DoLearn Logo" className="w-[160px] h-[30px]" />
               </div>
-              <p className="text-gray-400 mb-4">
-                Subscribe our Newsletter
-              </p>
-              <p className="text-gray-500 text-sm">
-                Get the latest updates on exam preparation tips and resources
-              </p>
             </div>
-            <div>
-              <div className="flex gap-3">
-                <input
-                  type="email"
-                  placeholder="Enter your email"
-                  className="flex-1 px-4 py-3 rounded-lg bg-gray-800 border border-gray-700 focus:border-blue-500 focus:outline-none"
-                />
-                {/* <Button className="bg-blue-600 hover:bg-blue-700 px-8">
-                  Subscribe
-                </Button> */}
+            {/* About */}
+            <div className='lg:col-span-2'>
+              <h4 className="text-white font-semibold mb-4">About DoLearn</h4>
+              <p className="text-sm sm:text-xs text-[#808080] leading-relaxed mb-4">
+                Your trusted destination for exam preparation and progress tracking.We provide verified questions, real CBT practice, and clear performance insights.
+              </p>
+              <div className="flex flex-col sm:flex-row gap-4 text-xs sm:text-sm">
+                <span>(210) 555-0114</span>
+                <span>Dolearnn@gmail.com</span>
               </div>
+            </div>
+            {/* Quick Links */}
+            <div>
+              <h4 className="text-white font-semibold mb-4">Quick Links</h4>
+              <ul className="space-y-2 text-sm sm:text-xs  text-[#999999]">
+                <li className="hover:text-white cursor-pointer">Inventory</li>
+                <li className="hover:text-white cursor-pointer">
+                  Sell your cars
+                </li>
+                <li className="hover:text-white cursor-pointer">
+                  Book a car
+                </li>
+                <li className="hover:text-white cursor-pointer">
+                  Contact Us
+                </li>
+              </ul>
+            </div>
+            {/* Working Hours */}
+            <div>
+              <h4 className="text-white font-semibold mb-4">Working Hour</h4>
+              <ul className="space-y-2 text-sm sm:text-xs  text-[#999999]">
+                <li>Monday - Friday: 8:00 - 19:00</li>
+                <li>Saturday: 8:00 - 17:00</li>
+                <li>Sunday: Closed</li>
+              </ul>
+            </div>
+
+            {/* Support */}
+            <div>
+              <h4 className="text-white font-semibold mb-4">Support</h4>
+              <ul className="space-y-2 text-sm sm:text-xs  text-[#999999]">
+                <li className="hover:text-white cursor-pointer">FAQs</li>
+                <li className="hover:text-white cursor-pointer">
+                  Terms & Conditions
+                </li>
+                <li className="hover:text-white cursor-pointer">
+                  Privacy Policy
+                </li>
+              </ul>
             </div>
           </div>
-          <div className="border-t border-gray-800 mt-12 pt-8 text-center text-gray-500 text-sm">
-            <p>© 2024 DoLearn. All rights reserved.</p>
+
+          {/* Divider */}
+          <div className="border-t border-[#808080] mt-12 pt-6 text-center text-xs text-[#808080]">
+            DOLEARNN eLearning © {new Date().getFullYear()} All Rights Reserved
           </div>
         </div>
+
+        {/* Scroll To Top Button */}
+        <button
+          onClick={scrollToTop}
+          className="fixed bottom-6 right-6 bg-[#044272] p-3 rounded-full text-white shadow-lg hover:bg-[#08354C] transition-all duration-300"
+        >
+          <ChevronUp size={20} />
+        </button>
       </footer>
     </main>
   );
