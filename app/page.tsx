@@ -3,7 +3,7 @@
 import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
-import logo from '../assests/home/logo.png';
+import logo from '../assests/home/logo.svg';
 import HeroImg from '../assests/home/hero-img.png';
 import ExamImage1 from "../assests/home/exam-img-1.png";
 import ExamImage2 from "../assests/home/exam-img-2.png";
@@ -11,12 +11,16 @@ import jambImg from "../assests/home/jamb.png";
 import waecImg from "../assests/home/waec.png";
 import necoImg from "../assests/home/neco.png";
 import satImg from "../assests/home/sat.png";
-import rightImg from "../assests/home/right-icon.png"
 import onlineImg1 from "../assests/home/online-img1.png";
 import onlineImg2 from "../assests/home/online-img2.png";
 import studentImg from "../assests/home/student-img.jpg";
 import productImg from "../assests/home/productive-img.png";
 import fullLogo from "../assests/home/full-logo.png";
+import instantImg from "../assests/home/instant-result.svg"
+import examImg from "../assests/home/exam-svg.svg";
+import practiceImg from "../assests/home/practice.svg";
+import goalImg from "../assests/home/goal.svg"
+import graduationImg from "../assests/home/graduation.svg"
 import {
   Accordion,
   AccordionContent,
@@ -37,6 +41,7 @@ import {
 } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
+import TestimonialSlider from '@/components/Home/TestimonialSlider';
 
 export default function Home() {
   const scrollToTop = () => {
@@ -320,14 +325,26 @@ export default function Home() {
       </section>
 
       {/* How It Works */}
-      <section className="py-10 bg-gradient-to-b from-gray-900 to-gray-800 text-white">
-        <div className="max-w-7xl mx-auto px-6">
+      <section
+        className="
+    relative
+    py-10
+    text-white
+    bg-[url('/graduation.svg')]
+    bg-cover
+    bg-center
+    bg-no-repeat
+  "
+      >
+        <div className="absolute inset-0 bg-[#021C30B2]" />
+
+        <div className="max-w-7xl mx-auto px-6 relative z-100 ">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className="text-center mb-16"
+            className="text-center mb-12"
           >
             <h2 className="text-2xl font-semibold ">How it works</h2>
             <p className="text-gray-300">
@@ -340,23 +357,25 @@ export default function Home() {
             {[
               {
                 step: '01',
-                icon: rightImg,
+                icon: examImg,
                 title: 'Choose your exam',
-                color: "#D400FF"
+                color: "#D400FF4D"
               },
               {
                 step: '02',
-                icon: FileText,
+                icon: practiceImg,
                 title: 'Practice past questions',
+                color: "#00000"
               },
               {
                 step: '03',
-                icon: ClipboardCheck,
+                icon: instantImg,
                 title: 'Get instant result',
+                color: "#FB76014D"
               },
               {
                 step: '04',
-                icon: BarChart3,
+                icon: goalImg,
                 title: 'Improve score',
               },
             ].map((item, index) => (
@@ -366,15 +385,15 @@ export default function Home() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: index * 0.1 }}
-                className='bg-blue'
+                className='relative z-10 '
               >
-                <Card className=" transition-all text-center h-full py-6">
+                <Card className="bg-transparent transition-all text-center h-full py-4  bg-none  text-white">
                   <CardContent>
-                    <div className={`w-14 h-14 rounded-full bg-${item.color} flex items-center justify-center mx-auto`}>
+                    <div className={`w-14 h-14 rounded-full  flex items-center justify-center mx-auto`}>
                       {/* here */}
-                      {/* <Image src={} alt="Right Icon" className="w-5 h-5 text-white object-cover" /> */}
+                      <Image src={item.icon} alt="Right Icon" className="w-12 h-12  text-white object-cover" />
                     </div>
-                    <h3 className="text-sm mb-3">{item.title}</h3>
+                    <h3 className="text-sm mb-3 mt-5">{item.title}</h3>
                   </CardContent>
                 </Card>
               </motion.div>
@@ -397,7 +416,7 @@ export default function Home() {
                 <h2 className="text-xl  text-[#54CD98] ">
                   Why Students Choose Us?
                 </h2>
-                <h2 className="text-xl  mb-14 mt-2">
+                <h2 className="text-xl  mb-8 mt-2">
                   Built to help students learn faster, practice smarter, and
                   succeed confidently
                 </h2>
@@ -457,7 +476,7 @@ export default function Home() {
       </section>
 
       {/* Benefits Section */}
-      <section className="py-10 pb-10 md:pb-48 bg-[#E6ECF1]">
+      <section className="py-10 pb-10 md:pb-28 bg-[#E6ECF1]">
         <div className="max-w-7xl mx-auto px-6">
           <div className="grid lg:grid-cols-2 gap-16 ">
             <motion.div
@@ -535,30 +554,29 @@ export default function Home() {
             transition={{ duration: 0.6 }}
             className="text-center mb-16"
           >
-            <h2 className="text-4xl font-bold text-gray-900 mb-4">
+            <h2 className="text-2xl font-bold text-[#044272]">
               Voices of Our Global Student
             </h2>
-            <p className="text-gray-600 max-w-2xl mx-auto">
-              Thousands of students in different countries have used our
-              platform to improve their exam scores.
+            <p className="text-md max-w-3xl mx-auto">
+              Thousands of students use our platform to prepare smarter and score higher.
             </p>
           </motion.div>
 
-          <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+          <div className="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-8 md:gap-16">
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6 }}
             >
-              <div className="text-sm text-gray-500 mb-4">Testimonial</div>
-              <h3 className="text-2xl font-bold text-gray-900 mb-6">
-                Stories of Growth and Success
-              </h3>
-              <p className="text-gray-600 mb-6">
-                Our students consistently share how the platform's detailed
-                explanations, verified exam questions and smart analytics have
-                transformed how they prepared.
+              <div className="text-md font-semibold  mb-2">
+               Testimonials
+              </div>
+              <h2 className="text-2xl font-bold text-[#044272] mb-2">
+              Stories of Growth and Success
+              </h2>
+              <p className="">
+These are real experiences from students who used verified exam questions and smart analytics to transform how they prepared
               </p>
             </motion.div>
 
@@ -568,37 +586,7 @@ export default function Home() {
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.2 }}
             >
-              <Card className="bg-gradient-to-br from-blue-600 to-blue-700 border-0 relative overflow-hidden">
-                <CardContent className="p-8 text-white relative z-10">
-                  <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full -translate-y-16 translate-x-16" />
-                  <p className="text-lg mb-6 leading-relaxed">
-                    "DoLearn helped transform my exam preparation. The practice
-                    questions were exactly like the real JAMB exam, and the
-                    instant feedback helped me understand my mistakes. I improved
-                    my score from 180 to 285 in just 3 months! The platform
-                    made studying actually enjoyable."
-                  </p>
-                  <div className="flex items-center space-x-3">
-                    <div className="w-12 h-12 rounded-full bg-yellow-400 flex items-center justify-center">
-                      <span className="text-2xl">👨‍🎓</span>
-                    </div>
-                    <div>
-                      <div className="font-bold">Chukwu Ebuka</div>
-                      <div className="text-blue-200 text-sm">
-                        JAMB Student
-                      </div>
-                    </div>
-                  </div>
-                  <div className="flex items-center space-x-1 mt-4">
-                    {[1, 2, 3, 4, 5].map((star) => (
-                      <Star
-                        key={star}
-                        className="w-5 h-5 fill-yellow-400 text-yellow-400"
-                      />
-                    ))}
-                  </div>
-                </CardContent>
-              </Card>
+              <TestimonialSlider />
             </motion.div>
           </div>
         </div>
@@ -620,7 +608,7 @@ export default function Home() {
                 Frequently Ask Question
               </div>
               <h2 className="text-2xl font-bold text-gray-900 mb-2">
-                Do You Have Any Questions?
+                Do You Have Any <span className='text-[#044272]'>Questions?</span>
               </h2>
               <p className="">
                 Everything you need to know about this product, can’t find the answer you are looking for.
