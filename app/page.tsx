@@ -1,10 +1,8 @@
 'use client';
-
 import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import logo from '../assests/home/logo.svg';
-import HeroImg from '../assests/home/hero-img.png';
 import ExamImage1 from "../assests/home/exam-img-1.png";
 import ExamImage2 from "../assests/home/exam-img-2.png";
 import jambImg from "../assests/home/jamb.png";
@@ -20,7 +18,12 @@ import instantImg from "../assests/home/instant-result.svg"
 import examImg from "../assests/home/exam-svg.svg";
 import practiceImg from "../assests/home/practice.svg";
 import goalImg from "../assests/home/goal.svg"
-import graduationImg from "../assests/home/graduation.svg"
+import slantArrow from "../assests/home/slant-arrow.svg"
+// 
+
+import graduateImg from "../assests/home/hero-profile-img.png"
+import profileSmallImg from "../assests/home/small-profile-img.jpg"
+import userImg from "../assests/home/avatar.jpg"
 import {
   Accordion,
   AccordionContent,
@@ -42,6 +45,7 @@ import {
 import Link from 'next/link';
 import Image from 'next/image';
 import TestimonialSlider from '@/components/Home/TestimonialSlider';
+import Hero from '@/components/Home/HeroSection';
 
 export default function Home() {
   const scrollToTop = () => {
@@ -86,7 +90,7 @@ export default function Home() {
       </nav>
 
       {/* Hero Section */}
-      <section className="pt-32 pb-20 bg-[#EEFAF5]">
+      <section className="pt-[53px]  bg-[#EEFAF5]">
         <div className="max-w-7xl mx-auto px-6">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <motion.div
@@ -114,7 +118,50 @@ export default function Home() {
               transition={{ duration: 0.8, delay: 0.2 }}
               className="relative hidden md:flex"
             >
-              <Image src={HeroImg} className="w-full h-[450px] object-cover" alt='Hero image' />
+              <div className="relative flex justify-center">
+                <Image
+                  src={slantArrow}
+                  alt="profile"
+                  className="absolute -left-[130px] w-30 h-30 top-[190px]"
+                />
+                {/* background circle */}
+                <div
+                  className="absolute w-[370px] h-[370px] rounded-full left-[70px] top-36
+               bg-[url('/circle.png')] bg-cover bg-center"
+                ></div>
+                {/* graduate image */}
+                <Image
+                  src={graduateImg} // replace with your image path
+                  alt="graduate"
+                  className="relative z-10 w-full h-[520px] object-cover"
+                />
+
+                {/* profile circle */}
+                <Image
+                  src={profileSmallImg}   // small profile image
+                  alt="profile"
+                  className="absolute top-40 left-20 w-28 h-28 rounded-full"
+                />
+                {/* testimonial card */}
+                <div className="bg-white  z-50 absolute bottom-20 -left-28 shadow-xl rounded-lg px-4 py-3 gap-3">
+                  <div className=" z-50  flex items-center">
+                    <div className="flex -space-x-2">
+                      <Image src={userImg} className="w-10 h-10 rounded-full border-2 object-cover border-white" alt="avatar" />
+                      <Image src={userImg} className="w-10 h-10 rounded-full border-2 object-cover border-white" alt="avatar" />
+                      <Image src={userImg} className="w-10 h-10  rounded-full border-2 object-cover border-white" alt="avatar" />
+                    </div>
+
+                    <div className="text-sm">
+                      <div className="text-yellow-400 text-xl">★★★★</div>
+
+                    </div>
+                  </div>
+                  <p className="text-[#33383B] text-sm mt-2">
+                    Over 3000+ learners <br /> engaged globally today
+                  </p>
+
+                </div>
+              </div>
             </motion.div>
           </div>
         </div>
@@ -348,8 +395,8 @@ export default function Home() {
           >
             <h2 className="text-2xl font-semibold ">How it works</h2>
             <p className="text-gray-300">
-              Simple process steps to better result —{' '}
-              <span className="text-[#54CD98]">BETTER RESULT</span>
+              Simple process steps to  span better result —{' '}
+              <span className="text-[#54CD98] font-semibold">BETTER RESULT</span>
             </p>
           </motion.div>
 
@@ -570,13 +617,13 @@ export default function Home() {
               transition={{ duration: 0.6 }}
             >
               <div className="text-md font-semibold  mb-2">
-               Testimonials
+                Testimonials
               </div>
               <h2 className="text-2xl font-bold text-[#044272] mb-2">
-              Stories of Growth and Success
+                Stories of Growth and Success
               </h2>
               <p className="">
-These are real experiences from students who used verified exam questions and smart analytics to transform how they prepared
+                These are real experiences from students who used verified exam questions and smart analytics to transform how they prepared
               </p>
             </motion.div>
 
@@ -756,7 +803,7 @@ These are real experiences from students who used verified exam questions and sm
 
             {/* Input + Button */}
             <div className="w-full md:w-auto">
-              <form className="flex flex-col sm:flex-row items-center bg-white rounded-full p-1 shadow-sm">
+              <form className="flex flex-col sm:flex-row items-center bg-none lg:bg-white rounded-full p-1 shadow-sm">
                 <input
                   type="email"
                   placeholder="Your email address"
