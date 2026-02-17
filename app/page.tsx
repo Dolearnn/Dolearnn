@@ -90,7 +90,7 @@ export default function Home() {
       </nav>
 
       {/* Hero Section */}
-      <section className="pt-[53px]  bg-[#EEFAF5]">
+      <section className="pt-20  lg:pt-[53px]  bg-[#EEFAF5]">
         <div className="max-w-7xl mx-auto px-6">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <motion.div
@@ -98,17 +98,17 @@ export default function Home() {
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8 }}
             >
-              <h1 className="text-3xl lg:text-4xl font-semibold text-gray-900 leading-tight mb-2">
-                Practice  <span className='text-[#044272]'>Smarter,</span>  Improve Faster and{' '}
+              <h1 className="text-3xl lg:text-4xl  font-bold text-gray-900  md:leading-tight mb-2">
+                Practice  <span className='text-[#044272]'>Smarter,</span>  Improve  <br/> Faster and{' '}
                 <span className="text-[#54CD98]">Master Your Exams</span>
               </h1>
-              <p className="text-lg mb-8">
-                Practice real exam questions, get instant results, and improve
+              <p className="text-lg mb-8 font-semibold">
+                Practice real exam questions, get instant results, and <br/> improve
                 your score.
               </p>
               <div className="flex flex-wrap gap-4 mb-8 mt-8">
                 <Button className="bg-[#044272]  rounded-3xl md:inline-flex">
-                  Get Free Test
+                  Start Free Test
                 </Button>
               </div>
             </motion.div>
@@ -116,34 +116,34 @@ export default function Home() {
               initial={{ opacity: 0, x: 60 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8, delay: 0.2 }}
-              className="relative hidden md:flex"
+              className="relative hidden lg:flex"
             >
               <div className="relative flex justify-center">
                 <Image
                   src={slantArrow}
                   alt="profile"
-                  className="absolute -left-[130px] w-30 h-30 top-[190px]"
+                  className="absolute -left-[130px] w-30 h-[120px] top-[179px]"
                 />
                 {/* background circle */}
                 <div
-                  className="absolute w-[370px] h-[370px] rounded-full left-[70px] top-36
+                  className="absolute w-[370px] h-[350px] rounded-full left-[28px] top-36
                bg-[url('/circle.png')] bg-cover bg-center"
                 ></div>
                 {/* graduate image */}
                 <Image
                   src={graduateImg} // replace with your image path
                   alt="graduate"
-                  className="relative z-10 w-full h-[520px] object-cover"
+                  className="relative z-10 w-full h-[498px] object-cover"
                 />
 
                 {/* profile circle */}
                 <Image
                   src={profileSmallImg}   // small profile image
                   alt="profile"
-                  className="absolute top-40 left-20 w-28 h-28 rounded-full"
+                  className="absolute top-[130px] left-20 w-28 h-28 rounded-full"
                 />
                 {/* testimonial card */}
-                <div className="bg-white  z-50 absolute bottom-20 -left-28 shadow-xl rounded-lg px-4 py-3 gap-3">
+                <div className="bg-white  z-10 absolute bottom-20 -left-28 shadow-xl rounded-lg px-4 py-3 gap-3">
                   <div className=" z-50  flex items-center">
                     <div className="flex -space-x-2">
                       <Image src={userImg} className="w-10 h-10 rounded-full border-2 object-cover border-white" alt="avatar" />
@@ -467,7 +467,7 @@ export default function Home() {
                   Built to help students learn faster, practice smarter, and
                   succeed confidently
                 </h2>
-                <div className='space-y-4 '>
+                <div className='space-y-4  mt-16'>
                   <div>
                     <h3 className="text-xl mb-2 font-medium">
                       Exam-standard questions
