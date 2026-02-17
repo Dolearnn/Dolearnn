@@ -24,6 +24,8 @@ import slantArrow from "../assests/home/slant-arrow.svg"
 import graduateImg from "../assests/home/hero-profile-img.png"
 import profileSmallImg from "../assests/home/small-profile-img.jpg"
 import userImg from "../assests/home/avatar.jpg"
+import userImg2 from "../assests/home/avatar2.jpg"
+import userImg3 from "../assests/home/avatar3.jpg"
 import {
   Accordion,
   AccordionContent,
@@ -147,8 +149,8 @@ export default function Home() {
                   <div className=" z-50  flex items-center">
                     <div className="flex -space-x-2">
                       <Image src={userImg} className="w-10 h-10 rounded-full border-2 object-cover border-white" alt="avatar" />
-                      <Image src={userImg} className="w-10 h-10 rounded-full border-2 object-cover border-white" alt="avatar" />
-                      <Image src={userImg} className="w-10 h-10  rounded-full border-2 object-cover border-white" alt="avatar" />
+                      <Image src={userImg2} className="w-10 h-10 rounded-full border-2 object-cover border-white" alt="avatar" />
+                      <Image src={userImg3} className="w-10 h-10  rounded-full border-2 object-cover border-white" alt="avatar" />
                     </div>
 
                     <div className="text-sm">
