@@ -7,15 +7,24 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 const testimonials = [
   {
     id: 1,
-    text: "Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. sociosqu ad litora torquent per",
-    avatar: "https://randomuser.me/api/portraits/men/32.jpg",
-    name: "Sarah Johnson",
+    text: "The pairing team understood Zara better than any platform I've tried. Her Maths teacher is patient, consistent, and she actually looks forward to sessions. After three months, her grades jumped a full letter.",
+    avatar: "https://randomuser.me/api/portraits/women/44.jpg",
+    name: "Amara Okafor",
+    role: "Parent · London",
   },
   {
     id: 2,
-    text: "Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. sociosqu ad litora torquent per",
-    name: "Sarah Johnson",
-    avatar: "https://randomuser.me/api/portraits/women/44.jpg",
+    text: "I didn't have to search through 100 profiles. I filled a form, they matched me with an SAT tutor the next day, and I went from 1180 to 1420 in ten weeks.",
+    avatar: "https://randomuser.me/api/portraits/men/32.jpg",
+    name: "Kayin Okafor",
+    role: "Student · College Year 1",
+  },
+  {
+    id: 3,
+    text: "Session feedback after every class means I always know what my daughter is working on. The monthly report is a game-changer — I can see progress, not just hope for it.",
+    avatar: "https://randomuser.me/api/portraits/women/68.jpg",
+    name: "Ngozi Adeyemi",
+    role: "Parent · Toronto",
   },
 ];
 
@@ -52,39 +61,17 @@ export default function TestimonialSlider() {
     }),
   };
 
-  const swipeConfidenceThreshold = 100;
-
   return (
-    <div className="relative flex items-center justify-center py-24">
-
-      {/* LEFT BUTTON (only on md+ screens) */}
+    <div className="relative flex items-center justify-center py-16">
       <button
         onClick={() => paginate(-1)}
-        className="hidden md:flex absolute left-[-40px] top-[40px] rounded-full border border-[#044272] -translate-y-1/2 z-30 bg-white p-3 hover:scale-105 transition"
+        aria-label="Previous testimonial"
+        className="hidden md:flex absolute left-0 w-10 h-10 rounded-full bg-white shadow items-center justify-center text-brand hover:bg-accent2-50 transition z-20"
       >
-        <ChevronLeft size={16} color="#044272" />
+        <ChevronLeft className="w-5 h-5" />
       </button>
 
-      {/* CARD STACK WRAPPER */}
-      <div className="relative w-[320px] -mt-[100px] h-[300px] sm:w-[420px] md:w-[500px]">
-
-        {/* Layer 2 */}
-        <motion.div
-          className="absolute inset-0 bg-teal-200 rounded-2xl"
-          initial={{ rotate: 6, x: 20, y: 20 }}
-          animate={{ rotate: 6, x: 20, y: 20 }}
-          transition={{ duration: 0.5 }}
-        />
-
-        {/* Layer 1 */}
-        <motion.div
-          className="absolute inset-0 bg-teal-300 rounded-2xl"
-          initial={{ rotate: -3, x: 10, y: 10 }}
-          animate={{ rotate: -3, x: 10, y: 10 }}
-          transition={{ duration: 0.5 }}
-        />
-
-        {/* Animated Card */}
+      <div className="relative w-full max-w-md">
         <AnimatePresence custom={direction} mode="wait">
           <motion.div
             key={current.id}
@@ -93,45 +80,50 @@ export default function TestimonialSlider() {
             initial="enter"
             animate="center"
             exit="exit"
-            transition={{ duration: 0.6, ease: "easeInOut" }}
-            className="relative bg-[#1F4F75] h-[300px] text-white rounded-2xl p-8 shadow-2xl cursor-grab"
-            drag="x"
-            dragConstraints={{ left: 0, right: 0 }}
-            dragElastic={0.2}
-            onDragEnd={(e, { offset, velocity }) => {
-              const swipe = offset.x * velocity.x;
-              if (swipe < -swipeConfidenceThreshold) {
-                paginate(1); // swipe left → next
-              } else if (swipe > swipeConfidenceThreshold) {
-                paginate(-1); // swipe right → prev
-              }
-            }}
+            transition={{ duration: 0.4 }}
+            className="bg-white shadow-xl rounded-2xl p-6 border border-gray-100"
           >
-            <p className="text-sm sm:text-base leading-relaxed mb-6">{current.text}</p>
-
-            <div className="border-t border-white/30 pt-4 flex items-center justify-between">
-              <div className="flex items-center gap-3">
-                <img
-                  src={current.avatar}
-                  alt={current.name}
-                  className="w-10 h-10 rounded-full object-cover"
-                />
-                <span className="text-sm font-medium">{current.name}</span>
+            <p className="text-sm text-gray-700 leading-relaxed">
+              &ldquo;{current.text}&rdquo;
+            </p>
+            <div className="flex items-center gap-3 mt-5 pt-5 border-t border-gray-100">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={current.avatar}
+                alt={current.name}
+                className="w-10 h-10 rounded-full object-cover"
+              />
+              <div>
+                <p className="text-sm font-semibold text-gray-900">
+                  {current.name}
+                </p>
+                <p className="text-xs text-gray-500">{current.role}</p>
               </div>
-
-              <div className="flex text-yellow-400 text-xl">★★★★★</div>
             </div>
           </motion.div>
         </AnimatePresence>
       </div>
 
-      {/* RIGHT BUTTON (only on md+ screens) */}
       <button
         onClick={() => paginate(1)}
-        className="hidden md:flex absolute right-[-55px] top-[40px] rounded-full bg-[#044272] -translate-y-1/2 z-30 p-3 hover:scale-105 transition"
+        aria-label="Next testimonial"
+        className="hidden md:flex absolute right-0 w-10 h-10 rounded-full bg-white shadow items-center justify-center text-brand hover:bg-accent2-50 transition z-20"
       >
-        <ChevronRight size={20} color="white" />
+        <ChevronRight className="w-5 h-5" />
       </button>
+
+      <div className="absolute bottom-2 left-0 right-0 flex justify-center gap-2 md:hidden">
+        {testimonials.map((_, i) => (
+          <button
+            key={i}
+            onClick={() => setIndex([i, i > index ? 1 : -1])}
+            aria-label={`Go to testimonial ${i + 1}`}
+            className={`w-2 h-2 rounded-full transition ${
+              i === index ? "bg-brand w-6" : "bg-gray-300"
+            }`}
+          />
+        ))}
+      </div>
     </div>
   );
 }
