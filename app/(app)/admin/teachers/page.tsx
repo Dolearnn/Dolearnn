@@ -38,6 +38,7 @@ import {
 } from '@/lib/store/admin';
 import { updateTeacherHourlyRate } from '@/lib/store/client';
 import type { Child, Teacher } from '@/lib/types';
+import { useMounted } from '@/lib/use-mounted';
 
 const COUNTRY_CODES = [
   { value: '+234', label: 'Nigeria (+234)' },
@@ -81,6 +82,7 @@ const emptyTeacherForm: AddTeacherForm = {
 };
 
 export default function AdminTeachersPage() {
+  const mounted = useMounted();
   const sessions = adminSessions();
   const [teachers, setTeachers] = useState<Teacher[]>(adminTeachers());
   const [children, setChildren] = useState<Child[]>(adminChildren());
@@ -224,6 +226,14 @@ export default function AdminTeachersPage() {
       ),
     );
   };
+
+  if (!mounted) {
+    return (
+      <div className="space-y-6">
+        <PageHeader title="Loading…" description="" />
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-6">

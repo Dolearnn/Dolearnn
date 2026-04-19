@@ -10,8 +10,10 @@ import {
   teacherMe,
   teacherPayouts,
 } from '@/lib/store/teacher';
+import { useMounted } from '@/lib/use-mounted';
 
 export default function TeacherEarningsPage() {
+  const mounted = useMounted();
   const teacher = teacherMe();
   const earnings = teacherEarnings();
   const payouts = teacherPayouts();
@@ -26,6 +28,14 @@ export default function TeacherEarningsPage() {
     const expected = thisMonth.reduce((sum, e) => sum + e.amount, 0);
     return { expected, payoutTotal, verifiedHours };
   }, [earnings, payouts]);
+
+  if (!mounted) {
+    return (
+      <div className="space-y-6">
+        <PageHeader title="Loading…" description="" />
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-6">

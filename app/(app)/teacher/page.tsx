@@ -20,6 +20,7 @@ import {
   teacherSessions,
   teacherStudents,
 } from '@/lib/store/teacher';
+import { useMounted } from '@/lib/use-mounted';
 import type { Session } from '@/lib/types';
 
 function isSameDay(a: Date, b: Date) {
@@ -31,6 +32,7 @@ function isSameDay(a: Date, b: Date) {
 }
 
 export default function TeacherHome() {
+  const mounted = useMounted();
   const me = teacherMe();
   const sessions = teacherSessions();
   const students = teacherStudents();
@@ -60,6 +62,14 @@ export default function TeacherHome() {
   const pending = earnings
     .filter((e) => e.status === 'Pending')
     .reduce((sum, e) => sum + e.amount, 0);
+
+  if (!mounted) {
+    return (
+      <div className="space-y-6">
+        <PageHeader title="Loading…" description="" />
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-6">

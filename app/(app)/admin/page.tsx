@@ -14,6 +14,7 @@ import StatTile from '@/components/dashboard/StatTile';
 import { Button } from '@/components/ui/button';
 import { displayGrade, displaySubject } from '@/lib/types';
 import { cn } from '@/lib/utils';
+import { useMounted } from '@/lib/use-mounted';
 import {
   adminPayments,
   adminPayouts,
@@ -24,6 +25,7 @@ import {
 } from '@/lib/store/admin';
 
 export default function AdminHome() {
+  const mounted = useMounted();
   const pending = adminPendingIntakes();
   const sessions = adminSessions();
   const teachers = adminTeachers();
@@ -41,6 +43,14 @@ export default function AdminHome() {
   const revenue = payments.reduce((sum, p) => sum + p.amount, 0);
   const paidOut = payouts.reduce((sum, p) => sum + p.amount, 0);
   const completed = sessions.filter((s) => s.status === 'Completed').length;
+
+  if (!mounted) {
+    return (
+      <div className="space-y-6">
+        <PageHeader title="Loading…" description="" />
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-6">

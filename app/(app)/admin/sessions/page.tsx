@@ -21,6 +21,7 @@ import {
   type Session,
   type SessionStatus,
 } from '@/lib/types';
+import { useMounted } from '@/lib/use-mounted';
 
 const TAB_ORDER: ('All' | SessionStatus)[] = [
   'All',
@@ -30,6 +31,7 @@ const TAB_ORDER: ('All' | SessionStatus)[] = [
 ];
 
 export default function AdminSessionsPage() {
+  const mounted = useMounted();
   const [sessions, setSessions] = useState<Session[]>(() => adminSessions());
   const [query, setQuery] = useState('');
 
@@ -62,6 +64,14 @@ export default function AdminSessionsPage() {
     }),
     [sessions],
   );
+
+  if (!mounted) {
+    return (
+      <div className="space-y-6">
+        <PageHeader title="Loading…" description="" />
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-6">

@@ -25,6 +25,7 @@ import {
 } from '@/lib/store/teacher';
 import { cn } from '@/lib/utils';
 import { isSessionPayoutEligible } from '@/lib/types';
+import { useMounted } from '@/lib/use-mounted';
 
 function monthKey(date: string) {
   return date.slice(0, 7);
@@ -38,6 +39,7 @@ function monthLabel(key: string) {
 }
 
 export default function TeacherReportsPage() {
+  const mounted = useMounted();
   const teacher = teacherMe();
   const sessions = teacherSessions(teacher.id);
 
@@ -100,6 +102,14 @@ export default function TeacherReportsPage() {
       byStudent,
     };
   }, [selectedMonth, sessions, teacher.hourlyRate]);
+
+  if (!mounted) {
+    return (
+      <div className="space-y-6">
+        <PageHeader title="Loading…" description="" />
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-6">

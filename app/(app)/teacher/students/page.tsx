@@ -25,6 +25,7 @@ import { StarRating } from '@/components/ui/star-rating';
 import { Textarea } from '@/components/ui/textarea';
 import { createSessionProposal } from '@/lib/store/client';
 import { cn } from '@/lib/utils';
+import { useMounted } from '@/lib/use-mounted';
 import {
   teacherMe,
   teacherNotes,
@@ -44,6 +45,7 @@ import {
 } from '@/lib/types';
 
 export default function TeacherStudentsPage() {
+  const mounted = useMounted();
   const teacher = teacherMe();
   const students = teacherStudents();
   const sessions = teacherSessions();
@@ -73,6 +75,14 @@ export default function TeacherStudentsPage() {
     });
     return map;
   }, [notes, sessions]);
+
+  if (!mounted) {
+    return (
+      <div className="space-y-6">
+        <PageHeader title="My students" description="Loading…" />
+      </div>
+    );
+  }
 
   if (students.length === 0) {
     return (

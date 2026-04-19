@@ -10,12 +10,14 @@ import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { cn } from '@/lib/utils';
 import { teacherMe } from '@/lib/store/teacher';
+import { useMounted } from '@/lib/use-mounted';
 import type { DayOfWeek, TimeBlock } from '@/lib/types';
 
 const DAYS: DayOfWeek[] = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
 const BLOCKS: TimeBlock[] = ['Morning', 'Afternoon', 'Evening'];
 
 export default function TeacherProfilePage() {
+  const mounted = useMounted();
   const me = teacherMe();
   const [bio, setBio] = useState(me.bio);
   const [subjects, setSubjects] = useState(me.subjects.join(', '));
@@ -41,6 +43,14 @@ export default function TeacherProfilePage() {
   const save = () => {
     setSavedAt(new Date().toISOString());
   };
+
+  if (!mounted) {
+    return (
+      <div className="space-y-6">
+        <PageHeader title="Loading…" description="" />
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-6">

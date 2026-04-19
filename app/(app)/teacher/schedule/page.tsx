@@ -6,11 +6,13 @@ import PageHeader from '@/components/dashboard/PageHeader';
 import StudentSessionRow from '@/components/dashboard/StudentSessionRow';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { teacherSessions } from '@/lib/store/teacher';
+import { useMounted } from '@/lib/use-mounted';
 import type { Session, SessionStatus } from '@/lib/types';
 
 const TAB_ORDER: SessionStatus[] = ['Upcoming', 'Completed', 'Cancelled'];
 
 export default function TeacherSchedulePage() {
+  const mounted = useMounted();
   const sessions = teacherSessions();
 
   const grouped = useMemo(() => {
@@ -40,6 +42,14 @@ export default function TeacherSchedulePage() {
     }
     return Array.from(groups.entries());
   }, [grouped.Upcoming]);
+
+  if (!mounted) {
+    return (
+      <div className="space-y-6">
+        <PageHeader title="Loading…" description="" />
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-6">

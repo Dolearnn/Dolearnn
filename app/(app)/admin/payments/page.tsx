@@ -21,8 +21,10 @@ import {
 } from '@/lib/store/admin';
 import { cn } from '@/lib/utils';
 import { isSessionPayoutEligible, type Payment } from '@/lib/types';
+import { useMounted } from '@/lib/use-mounted';
 
 export default function AdminPaymentsPage() {
+  const mounted = useMounted();
   const [paidTeacherIds, setPaidTeacherIds] = useState<Set<string>>(
     () => new Set(),
   );
@@ -106,6 +108,14 @@ export default function AdminPaymentsPage() {
     }
     return rows.sort((a, b) => b.date.localeCompare(a.date));
   }, [payments, payouts, parents]);
+
+  if (!mounted) {
+    return (
+      <div className="space-y-6">
+        <PageHeader title="Loading…" description="" />
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-6">

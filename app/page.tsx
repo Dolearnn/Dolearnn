@@ -10,7 +10,6 @@ import {
 } from '@/components/ui/accordion';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
-import TestimonialSlider from '@/components/Home/TestimonialSlider';
 import { ThemeToggle } from '@/components/theme-toggle';
 import {
   Award,
@@ -25,7 +24,6 @@ import {
   Radar,
   ShieldCheck,
   Sparkles,
-  Star,
   UserCheck,
   Users,
   Video,
@@ -34,9 +32,6 @@ import logo from '../assests/home/logo.svg';
 import fullLogo from '../assests/home/full-logo.png';
 import graduateImg from '../assests/home/hero-profile-img.png';
 import profileSmallImg from '../assests/home/small-profile-img.jpg';
-import userImg from '../assests/home/avatar.jpg';
-import userImg2 from '../assests/home/avatar2.jpg';
-import userImg3 from '../assests/home/avatar3.jpg';
 import slantArrow from '../assests/home/slant-arrow.svg';
 import onlineImg1 from '../assests/home/online-img1.png';
 import productImg from '../assests/home/productive-img.png';
@@ -50,7 +45,7 @@ const howItWorks = [
   {
     icon: UserCheck,
     title: 'We pair them with the right teacher',
-    body: 'Our team reviews the intake and hand-picks a vetted teacher — no searching on your end.',
+    body: 'Our team reviews the intake and hand-picks a vetted teacher — usually within 24 hours.',
   },
   {
     icon: Video,
@@ -60,7 +55,7 @@ const howItWorks = [
   {
     icon: LineChart,
     title: 'Track progress every session',
-    body: 'Session feedback, badges, and monthly reports keep you in the loop.',
+    body: 'Teacher feedback after every session, plus a monthly progress report.',
   },
 ];
 
@@ -68,31 +63,31 @@ const pairingReasons = [
   {
     icon: ShieldCheck,
     title: 'Quality controlled',
-    body: 'Every teacher is recruited, vetted and trial-tested by DoLearn — never by algorithm.',
+    body: 'Every teacher is interviewed, trial-taught, and approved by our team before they ever meet your child.',
   },
   {
     icon: HeartHandshake,
     title: 'Personalised match',
-    body: 'We match based on learning goals, personality, and availability — not just subject.',
+    body: 'We match on learning goals, schedule, and how your child learns — not just the subject name.',
   },
   {
     icon: Users,
-    title: 'Parents trust us',
-    body: 'One team handles your child\u2019s journey end-to-end. If something isn\u2019t working, we fix it.',
+    title: 'One team, end-to-end',
+    body: 'One team owns your child\u2019s journey from intake to progress report. If the match isn\u2019t right, we re-pair at no cost.',
   },
 ];
 
 const parentFeatures = [
   { icon: Users, label: 'Family Hub — manage 2–4 children from one account' },
-  { icon: ClipboardList, label: 'Teacher feedback after every session' },
-  { icon: LineChart, label: 'Monthly progress report (PDF)' },
-  { icon: ShieldCheck, label: 'Pay securely with Stripe or Flutterwave' },
+  { icon: ClipboardList, label: 'Teacher notes after every session' },
+  { icon: LineChart, label: 'Monthly progress report, sent as PDF' },
+  { icon: ShieldCheck, label: 'Secure payments via Stripe or Flutterwave' },
 ];
 
 const studentFeatures = [
   { icon: Compass, label: 'Learning Journey Map with milestones' },
   { icon: Award, label: 'Badges for streaks, subjects, and milestones' },
-  { icon: Radar, label: 'Skills Radar Chart — see strengths across subjects' },
+  { icon: Radar, label: 'Skills Radar — see strengths build across subjects' },
   { icon: Flame, label: 'Daily streaks and goal tracking' },
 ];
 
@@ -101,7 +96,7 @@ const plans = [
     name: 'Single Session',
     price: '$25–$40',
     per: 'per session',
-    description: 'Try DoLearn with no commitment.',
+    description: 'Try it with no commitment.',
     features: [
       '1 live 1-on-1 session',
       'Teacher hand-picked for your child',
@@ -114,7 +109,7 @@ const plans = [
     name: 'Starter Bundle',
     price: '$100–$150',
     per: '5 sessions',
-    description: 'Best for a first real stretch of learning.',
+    description: 'Enough sessions to see real change.',
     features: [
       '5 sessions with the same teacher',
       'Save vs. single session price',
@@ -160,7 +155,7 @@ export default function Home() {
             </div>
             <div className="flex items-center space-x-3">
               <ThemeToggle />
-              <Link href="/login" className="hidden md:block">
+              {/* <Link href="/login" className="hidden md:block">
                 <Button variant="outline" className="rounded-full">
                   Log in
                 </Button>
@@ -169,7 +164,7 @@ export default function Home() {
                 <Button className="bg-brand hover:bg-brand-600 px-6 rounded-full">
                   Get started
                 </Button>
-              </Link>
+              </Link> */}
             </div>
           </div>
         </div>
@@ -194,16 +189,16 @@ export default function Home() {
                 <span className="text-accent2-500">child.</span>
               </h1>
               <p className="text-base lg:text-lg text-gray-600 dark:text-muted-foreground mb-8 max-w-lg">
-                DoLearn connects international students and parents with vetted
-                teachers for live 1-on-1 sessions on Google Meet. No searching,
-                no guessing — just the right match.
+                We hand-pick a teacher for your child and run live 1-on-1
+                sessions on Google Meet. You skip the profile-scrolling. Our
+                team owns the match.
               </p>
               <div className="flex flex-wrap gap-3 mb-10">
-                <Link href="/register">
+                {/* <Link href="/register">
                   <Button className="bg-brand hover:bg-brand-600 rounded-full px-6">
                     Start free intake
                   </Button>
-                </Link>
+                </Link> */}
                 <Link href="#how-it-works">
                   <Button
                     variant="outline"
@@ -212,38 +207,6 @@ export default function Home() {
                     How we match
                   </Button>
                 </Link>
-              </div>
-              <div className="flex items-center gap-3">
-                <div className="flex -space-x-2">
-                  <Image
-                    src={userImg}
-                    alt="parent"
-                    className="w-9 h-9 rounded-full border-2 border-white object-cover"
-                  />
-                  <Image
-                    src={userImg2}
-                    alt="parent"
-                    className="w-9 h-9 rounded-full border-2 border-white object-cover"
-                  />
-                  <Image
-                    src={userImg3}
-                    alt="parent"
-                    className="w-9 h-9 rounded-full border-2 border-white object-cover"
-                  />
-                </div>
-                <div className="text-xs text-gray-600 dark:text-muted-foreground">
-                  <div className="flex text-yellow-400 text-sm">
-                    <Star className="w-3.5 h-3.5 fill-current" />
-                    <Star className="w-3.5 h-3.5 fill-current" />
-                    <Star className="w-3.5 h-3.5 fill-current" />
-                    <Star className="w-3.5 h-3.5 fill-current" />
-                    <Star className="w-3.5 h-3.5 fill-current" />
-                  </div>
-                  <span className="font-medium text-gray-800 dark:text-foreground">
-                    3,000+ learners matched
-                  </span>{' '}
-                  globally
-                </div>
               </div>
             </motion.div>
 
@@ -282,8 +245,8 @@ export default function Home() {
                     </p>
                   </div>
                   <p className="text-[11px] text-gray-500 dark:text-muted-foreground mt-2 leading-relaxed">
-                    Our team matched Zara with a Maths teacher based on goals,
-                    availability, and personality.
+                    We matched Ayo with a Maths teacher based on her goals,
+                    schedule, and how she learns best.
                   </p>
                 </div>
               </div>
@@ -365,15 +328,15 @@ export default function Home() {
               transition={{ duration: 0.6 }}
             >
               <p className="text-xs font-semibold uppercase tracking-wide text-accent2-400 mb-2">
-                The pairing model
+                Why pairing beats browsing
               </p>
               <h2 className="text-3xl lg:text-4xl font-bold mb-4 leading-tight">
-                Why we don&apos;t let you pick from a list.
+                You shouldn&apos;t have to pick a teacher blind.
               </h2>
               <p className="text-white/80 mb-8 leading-relaxed max-w-lg">
-                Most tutoring platforms hand you hundreds of profiles and hope
-                for the best. DoLearn reviews every intake and assigns the best
-                teacher — so every first session lands right.
+                Most platforms hand you hundreds of profiles and let you guess.
+                We read every intake, know every teacher on our roster, and
+                make the call ourselves — so the first session actually lands.
               </p>
               <div className="space-y-5">
                 {pairingReasons.map((r) => {
@@ -427,11 +390,11 @@ export default function Home() {
               Built for the whole family
             </p>
             <h2 className="text-3xl font-bold text-brand mb-3">
-              One platform. Two perspectives.
+              What parents need. What students want.
             </h2>
             <p className="text-gray-600 dark:text-muted-foreground max-w-2xl mx-auto">
-              Parents see everything they need to trust the process. Students
-              see a learning journey worth showing up for.
+              Parents get the visibility to trust the process. Students get
+              something they actually want to log into.
             </p>
           </motion.div>
 
@@ -451,8 +414,7 @@ export default function Home() {
                 For parents
               </h3>
               <p className="text-sm text-gray-700 dark:text-foreground/90 mb-6">
-                Clear, action-oriented tools to monitor your child&apos;s
-                learning.
+                Visibility into every session, without hovering.
               </p>
               <ul className="space-y-3">
                 {parentFeatures.map((f) => {
@@ -482,7 +444,7 @@ export default function Home() {
               </div>
               <h3 className="text-xl font-bold mb-2">For students</h3>
               <p className="text-sm text-white/80 mb-6">
-                Learning that feels like a journey, not a chore.
+                A dashboard students actually open.
               </p>
               <ul className="space-y-3">
                 {studentFeatures.map((f) => {
@@ -516,10 +478,10 @@ export default function Home() {
               Pricing
             </p>
             <h2 className="text-3xl font-bold text-brand mb-3">
-              Simple, pay-as-you-learn
+              Start with one session. Or save with a bundle.
             </h2>
             <p className="text-gray-600 dark:text-muted-foreground max-w-xl mx-auto">
-              Start with a single session or save with a bundle. Cancel anytime.
+              No subscriptions. No lock-in. Cancel or pause anytime.
             </p>
           </motion.div>
 
@@ -586,7 +548,7 @@ export default function Home() {
                     </li>
                   ))}
                 </ul>
-                <Link href="/register">
+                {/* <Link href="/register">
                   <Button
                     className={`w-full rounded-full ${
                       plan.highlight
@@ -596,7 +558,7 @@ export default function Home() {
                   >
                     {plan.cta}
                   </Button>
-                </Link>
+                </Link> */}
               </motion.div>
             ))}
           </div>
@@ -607,35 +569,24 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Testimonials */}
-      <section className="py-20 bg-white dark:bg-card">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="grid md:grid-cols-2 gap-8 md:gap-16 items-center">
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
-            >
-              <p className="text-xs font-semibold uppercase tracking-wide text-accent2-500 mb-2">
-                Testimonials
-              </p>
-              <h2 className="text-3xl font-bold text-brand mb-3">
-                Real families. Real progress.
-              </h2>
-              <p className="text-gray-600 dark:text-muted-foreground">
-                Parents and students across the UK, Canada, USA, and Nigeria
-                trust DoLearn&apos;s pairing team to get the match right.
-              </p>
-            </motion.div>
-            <motion.div
-              initial={{ opacity: 0, scale: 0.95 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-            >
-              <TestimonialSlider />
-            </motion.div>
+      {/* Trust strip */}
+      <section className="py-10 bg-white dark:bg-card border-y border-gray-100 dark:border-border">
+        <div className="max-w-5xl mx-auto px-6">
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-8 text-sm text-gray-600 dark:text-muted-foreground">
+            <span className="flex items-center gap-2">
+              <ShieldCheck className="w-4 h-4 text-brand" />
+              ID-verified teachers
+            </span>
+            <span className="hidden sm:inline text-gray-300 dark:text-border">·</span>
+            <span className="flex items-center gap-2">
+              <Video className="w-4 h-4 text-brand" />
+              Sessions on Google Meet
+            </span>
+            <span className="hidden sm:inline text-gray-300 dark:text-border">·</span>
+            <span className="flex items-center gap-2">
+              <Check className="w-4 h-4 text-brand" />
+              Secure payments via Stripe &amp; Flutterwave
+            </span>
           </div>
         </div>
       </section>
@@ -653,11 +604,10 @@ export default function Home() {
               FAQ
             </p>
             <h2 className="text-3xl font-bold text-brand mb-3">
-              Questions parents ask us
+              Before you book, parents usually ask:
             </h2>
             <p className="text-gray-600 dark:text-muted-foreground">
-              Everything you want to know before your child&apos;s first
-              session.
+              The honest answers, up front.
             </p>
           </motion.div>
 
@@ -764,10 +714,10 @@ export default function Home() {
               <span className="text-brand">child?</span>
             </h2>
             <p className="text-gray-700 dark:text-foreground/90 mb-6 max-w-md">
-              Fill a short intake. We&apos;ll take it from there.
+              Start the intake. We&apos;ll take it from there.
             </p>
             <div className="flex gap-3">
-              <Link href="/register">
+              {/* <Link href="/register">
                 <Button className="bg-brand hover:bg-brand-600 rounded-full px-6">
                   Start free intake
                 </Button>
@@ -779,7 +729,7 @@ export default function Home() {
                 >
                   Log in
                 </Button>
-              </Link>
+              </Link> */}
             </div>
           </motion.div>
           <motion.div
@@ -843,8 +793,8 @@ export default function Home() {
                 className="w-[160px] h-[30px] mb-4"
               />
               <p className="text-sm text-gray-500 dark:text-muted-foreground leading-relaxed max-w-xs">
-                Connecting international students with hand-picked teachers for
-                live 1-on-1 sessions on Google Meet.
+                Hand-picked teachers. Live 1-on-1 sessions. One team that owns
+                the match.
               </p>
             </div>
             <div>

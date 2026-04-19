@@ -27,6 +27,7 @@ import {
 } from '@/lib/store/admin';
 import { cn } from '@/lib/utils';
 import { isSessionPayoutEligible } from '@/lib/types';
+import { useMounted } from '@/lib/use-mounted';
 
 function monthKey(date: string) {
   return date.slice(0, 7);
@@ -40,6 +41,7 @@ function monthLabel(key: string) {
 }
 
 export default function AdminReportsPage() {
+  const mounted = useMounted();
   const payments = adminPayments();
   const sessions = adminSessions();
   const teachers = adminTeachers();
@@ -113,6 +115,14 @@ export default function AdminReportsPage() {
       deactivatedStudents,
     };
   }, [children, payments, selectedMonth, sessions, teachers]);
+
+  if (!mounted) {
+    return (
+      <div className="space-y-6">
+        <PageHeader title="Loading…" description="" />
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-6">

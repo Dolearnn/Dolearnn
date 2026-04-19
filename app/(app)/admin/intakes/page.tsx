@@ -18,10 +18,12 @@ import {
   type Child,
   type Teacher,
 } from '@/lib/types';
+import { useMounted } from '@/lib/use-mounted';
 
 type Filter = 'All' | 'Pending' | 'Matched';
 
 export default function AdminIntakesPage() {
+  const mounted = useMounted();
   const initial = adminChildWithIntake();
   const allTeachers = adminTeachers();
 
@@ -63,6 +65,14 @@ export default function AdminIntakesPage() {
 
   const pendingCount = children.filter((c) => !c.assignedTeacherId).length;
   const matchedCount = children.length - pendingCount;
+
+  if (!mounted) {
+    return (
+      <div className="space-y-6">
+        <PageHeader title="Loading…" description="" />
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-6">

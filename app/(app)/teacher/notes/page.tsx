@@ -22,6 +22,7 @@ import {
   teacherNotes,
   teacherSessions,
 } from '@/lib/store/teacher';
+import { useMounted } from '@/lib/use-mounted';
 import type { Performance, Rating, Session, SessionNote } from '@/lib/types';
 
 const PERFORMANCE_OPTIONS: Performance[] = ['Excellent', 'Good', 'Needs Work'];
@@ -37,6 +38,7 @@ interface DraftNote {
 }
 
 export default function TeacherNotesPage() {
+  const mounted = useMounted();
   const [sessions, setSessions] = useState<Session[]>(teacherSessions());
   const [notes, setNotes] = useState<SessionNote[]>(teacherNotes());
   const [drafts, setDrafts] = useState<DraftMap>({});
@@ -102,6 +104,14 @@ export default function TeacherNotesPage() {
       return rest;
     });
   };
+
+  if (!mounted) {
+    return (
+      <div className="space-y-6">
+        <PageHeader title="Loading…" description="" />
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-6">
