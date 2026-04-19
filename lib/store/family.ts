@@ -12,7 +12,13 @@ import {
   sessions as mockSessions,
   teachers as mockTeachers,
 } from '@/lib/mock';
-import { getChildren, getParent } from '@/lib/store/client';
+import {
+  applySessionOverrides,
+  getChildren,
+  getParent,
+  getRoleNotifications,
+  getStoredSessionNotes,
+} from '@/lib/store/client';
 import type { Child, Parent } from '@/lib/types';
 
 export function familyParent(): Parent {
@@ -38,10 +44,11 @@ function withMockEnrichment(children: Child[]): Child[] {
 }
 
 export function familySessionsForChild(childId: string) {
-  const owned = mockSessions.filter((s) => s.childId === childId);
+  const sessions = applySessionOverrides(mockSessions);
+  const owned = sessions.filter((s) => s.childId === childId);
   if (owned.length > 0) return owned;
   const fallbackChild = mockChildren[0];
-  return mockSessions
+  return sessions
     .filter((s) => s.childId === fallbackChild.id)
     .map((s) => ({ ...s, childId }));
 }
@@ -58,7 +65,9 @@ export function familyTeacher(teacherId?: string) {
 
 export function familySessionNote(noteId?: string) {
   if (!noteId) return undefined;
-  return mockSessionNotes.find((n) => n.id === noteId);
+  return [...getStoredSessionNotes(), ...mockSessionNotes].find(
+    (n) => n.id === noteId,
+  );
 }
 
 export function familyBadges() {
@@ -78,5 +87,6 @@ export function familyEarnings() {
 }
 
 export function familyNotifications() {
-  return mockNotifications;
+  const parent = familyParent();
+  return [...getRoleNotifications('parent', parent.id), ...mockNotifications];
 }

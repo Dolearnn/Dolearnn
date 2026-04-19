@@ -16,10 +16,10 @@ export default function IntakePage() {
   }, [params.id]);
 
   if (child === undefined) {
-    return <p className="text-sm text-gray-400">Loading…</p>;
+    return <p className="text-sm text-gray-400 dark:text-muted-foreground">Loading…</p>;
   }
   if (child === null) {
-    return <p className="text-sm text-gray-700">Child not found.</p>;
+    return <p className="text-sm text-gray-700 dark:text-foreground/90">Child not found.</p>;
   }
 
   return (
@@ -28,7 +28,7 @@ export default function IntakePage() {
         title={`Intake for ${child.fullName}`}
         description="Tell us what they need — we&apos;ll pair them with the right teacher."
       />
-      <div className="bg-white rounded-2xl border border-gray-200 p-6">
+      <div className="bg-white dark:bg-card rounded-2xl border border-gray-200 dark:border-border p-6">
         <IntakeWizard childId={child.id} />
       </div>
     </div>

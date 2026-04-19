@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { useEffect, useMemo, useState } from 'react';
 import {
+  AlertTriangle,
   BookOpen,
   CalendarDays,
   CreditCard,
@@ -54,7 +55,7 @@ export default function FamilyHome() {
   const teacher = nextSession ? familyTeacher(nextSession.teacherId) : null;
 
   if (!parent || !active) {
-    return <p className="text-sm text-gray-400">Loading…</p>;
+    return <p className="text-sm text-gray-400 dark:text-muted-foreground">Loading…</p>;
   }
 
   const sessionsDone = completed.length;
@@ -78,10 +79,29 @@ export default function FamilyHome() {
       />
 
       <ChildSwitcher
-        children={children}
+        students={children}
         activeId={active.id}
         onChange={setActiveId}
       />
+
+      {active.status === 'Deactivated' && (
+        <Link
+          href={`/family/children/${active.id}`}
+          className="block rounded-2xl border border-amber-100 bg-amber-50 p-4 transition hover:border-amber-200"
+        >
+          <div className="flex items-start gap-3">
+            <AlertTriangle className="w-5 h-5 text-amber-700 mt-0.5 shrink-0" />
+            <div>
+              <p className="text-sm font-semibold text-amber-900">
+                {active.fullName.split(' ')[0]}&apos;s lessons are paused
+              </p>
+              <p className="text-xs text-amber-800 mt-1">
+                Click to review the reason or activate this student again.
+              </p>
+            </div>
+          </div>
+        </Link>
+      )}
 
       {/* Next session hero card */}
       {nextSession && teacher ? (
@@ -106,12 +126,21 @@ export default function FamilyHome() {
               · {nextSession.durationMins} min · Live on Google Meet
             </p>
             <div className="flex flex-wrap gap-3">
+              {nextSession.meetLink ? (
               <Link href={nextSession.meetLink} target="_blank" rel="noreferrer">
                 <Button className="bg-accent2-500 text-brand hover:bg-accent2-400 rounded-full">
                   <Video className="w-4 h-4 mr-2" />
                   Join session
                 </Button>
               </Link>
+              ) : (
+                <Button
+                  className="bg-white/10 text-white rounded-full"
+                  disabled
+                >
+                  Awaiting admin link
+                </Button>
+              )}
               <Link href="/family/sessions">
                 <Button
                   variant="outline"
@@ -128,7 +157,7 @@ export default function FamilyHome() {
           <p className="text-sm text-brand font-semibold">
             No sessions scheduled yet
           </p>
-          <p className="text-xs text-gray-600 mt-1">
+          <p className="text-xs text-gray-600 dark:text-muted-foreground mt-1">
             Once intake is reviewed, our team will assign a teacher and book
             your first session.
           </p>
@@ -167,7 +196,7 @@ export default function FamilyHome() {
       <div className="grid lg:grid-cols-2 gap-4">
         <section>
           <div className="flex items-center justify-between mb-3">
-            <h2 className="text-sm font-semibold text-gray-700">
+            <h2 className="text-sm font-semibold text-gray-700 dark:text-foreground/90">
               Upcoming sessions
             </h2>
             <Link
@@ -179,7 +208,7 @@ export default function FamilyHome() {
           </div>
           <div className="space-y-3">
             {upcoming.length === 0 ? (
-              <p className="text-xs text-gray-500">Nothing scheduled.</p>
+              <p className="text-xs text-gray-500 dark:text-muted-foreground">Nothing scheduled.</p>
             ) : (
               upcoming.slice(0, 3).map((s) => <SessionRow key={s.id} session={s} />)
             )}
@@ -187,7 +216,7 @@ export default function FamilyHome() {
         </section>
         <section>
           <div className="flex items-center justify-between mb-3">
-            <h2 className="text-sm font-semibold text-gray-700">
+            <h2 className="text-sm font-semibold text-gray-700 dark:text-foreground/90">
               Latest feedback
             </h2>
             <Link
@@ -199,7 +228,7 @@ export default function FamilyHome() {
           </div>
           <div className="space-y-3">
             {completed.length === 0 ? (
-              <p className="text-xs text-gray-500">
+              <p className="text-xs text-gray-500 dark:text-muted-foreground">
                 Feedback will appear after the first session.
               </p>
             ) : (
@@ -250,14 +279,14 @@ function QuickLink({
   return (
     <Link
       href={href}
-      className="bg-white rounded-2xl border border-gray-200 p-4 hover:border-brand transition flex items-center gap-3"
+      className="bg-white dark:bg-card rounded-2xl border border-gray-200 dark:border-border p-4 hover:border-brand transition flex items-center gap-3"
     >
       <div className="w-10 h-10 rounded-lg bg-accent2-100 text-brand flex items-center justify-center">
         <Icon className="w-4 h-4" />
       </div>
       <div>
-        <p className="text-sm font-semibold text-gray-900">{label}</p>
-        <p className="text-xs text-gray-500">{sub}</p>
+        <p className="text-sm font-semibold text-gray-900 dark:text-foreground">{label}</p>
+        <p className="text-xs text-gray-500 dark:text-muted-foreground">{sub}</p>
       </div>
     </Link>
   );

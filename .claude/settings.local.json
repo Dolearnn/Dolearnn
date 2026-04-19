@@ -1,7 +1,10 @@
 {
   "permissions": {
     "allow": [
-      "Bash(npx tsc *)"
+      "Bash(npx tsc *)",
+      "Bash(sed -i.bak -e 's/\\\\bbg-white\\\\b\\\\\\([\"[:space:]/]\\\\\\)/bg-white dark:bg-card\\\\1/g' -e 's/\\\\bbg-gray-50\\\\b\\\\\\([\"[:space:]]\\\\\\)/bg-gray-50 dark:bg-background\\\\1/g' -e 's/\\\\bbg-gray-100\\\\b\\\\\\([\"[:space:]]\\\\\\)/bg-gray-100 dark:bg-secondary\\\\1/g' -e 's/\\\\btext-gray-900\\\\b\\\\\\([\"[:space:]]\\\\\\)/text-gray-900 dark:text-foreground\\\\1/g' -e 's/\\\\btext-gray-800\\\\b\\\\\\([\"[:space:]]\\\\\\)/text-gray-800 dark:text-foreground\\\\1/g' -e 's/\\\\btext-gray-700\\\\b\\\\\\([\"[:space:]]\\\\\\)/text-gray-700 dark:text-foreground\\\\/90\\\\1/g' -e 's/\\\\btext-gray-600\\\\b\\\\\\([\"[:space:]]\\\\\\)/text-gray-600 dark:text-muted-foreground\\\\1/g' -e 's/\\\\btext-gray-500\\\\b\\\\\\([\"[:space:]]\\\\\\)/text-gray-500 dark:text-muted-foreground\\\\1/g' -e 's/\\\\btext-gray-400\\\\b\\\\\\([\"[:space:]]\\\\\\)/text-gray-400 dark:text-muted-foreground\\\\1/g' -e 's/\\\\bborder-gray-200\\\\b\\\\\\([\"[:space:]]\\\\\\)/border-gray-200 dark:border-border\\\\1/g' -e 's/\\\\bborder-gray-100\\\\b\\\\\\([\"[:space:]]\\\\\\)/border-gray-100 dark:border-border\\\\1/g' app/page.tsx)",
+      "Bash(rm -f \"app/page.tsx.bak\")",
+      "Bash(npm run *)"
     ]
   }
 }

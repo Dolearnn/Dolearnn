@@ -113,7 +113,7 @@ export default function TeacherHome() {
           <p className="text-sm text-brand font-semibold">
             No upcoming sessions
           </p>
-          <p className="text-xs text-gray-600 mt-1">
+          <p className="text-xs text-gray-600 dark:text-muted-foreground mt-1">
             Your next booking will show up here.
           </p>
         </section>
@@ -144,7 +144,7 @@ export default function TeacherHome() {
       <div className="grid lg:grid-cols-2 gap-4">
         <section>
           <div className="flex items-center justify-between mb-3">
-            <h2 className="text-sm font-semibold text-gray-700">Today</h2>
+            <h2 className="text-sm font-semibold text-gray-700 dark:text-foreground/90">Today</h2>
             <Link
               href="/teacher/schedule"
               className="text-xs text-brand font-medium"
@@ -154,7 +154,7 @@ export default function TeacherHome() {
           </div>
           <div className="space-y-3">
             {todays.length === 0 ? (
-              <p className="text-xs text-gray-500">Nothing scheduled today.</p>
+              <p className="text-xs text-gray-500 dark:text-muted-foreground">Nothing scheduled today.</p>
             ) : (
               todays.map((s) => <StudentSessionRow key={s.id} session={s} />)
             )}
@@ -162,7 +162,7 @@ export default function TeacherHome() {
         </section>
         <section>
           <div className="flex items-center justify-between mb-3">
-            <h2 className="text-sm font-semibold text-gray-700">Coming up</h2>
+            <h2 className="text-sm font-semibold text-gray-700 dark:text-foreground/90">Coming up</h2>
             <Link
               href="/teacher/students"
               className="text-xs text-brand font-medium"
@@ -172,7 +172,7 @@ export default function TeacherHome() {
           </div>
           <div className="space-y-3">
             {upcoming.length === 0 ? (
-              <p className="text-xs text-gray-500">Nothing else scheduled.</p>
+              <p className="text-xs text-gray-500 dark:text-muted-foreground">Nothing else scheduled.</p>
             ) : (
               upcoming.slice(0, 3).map((s) => (
                 <StudentSessionRow key={s.id} session={s} />
@@ -220,14 +220,14 @@ function QuickLink({
   return (
     <Link
       href={href}
-      className="bg-white rounded-2xl border border-gray-200 p-4 hover:border-brand transition flex items-center gap-3"
+      className="bg-white dark:bg-card rounded-2xl border border-gray-200 dark:border-border p-4 hover:border-brand transition flex items-center gap-3"
     >
       <div className="w-10 h-10 rounded-lg bg-accent2-100 text-brand flex items-center justify-center">
         <Icon className="w-4 h-4" />
       </div>
       <div>
-        <p className="text-sm font-semibold text-gray-900">{label}</p>
-        <p className="text-xs text-gray-500">{sub}</p>
+        <p className="text-sm font-semibold text-gray-900 dark:text-foreground">{label}</p>
+        <p className="text-xs text-gray-500 dark:text-muted-foreground">{sub}</p>
       </div>
     </Link>
   );

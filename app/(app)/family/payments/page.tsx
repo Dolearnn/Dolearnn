@@ -45,7 +45,7 @@ export default function FamilyPaymentsPage() {
       ) : (
         <div className="bg-accent2-50 border border-accent2-100 rounded-3xl p-6 text-center">
           <p className="text-sm font-semibold text-brand">No active plan yet</p>
-          <p className="text-xs text-gray-600 mt-1">
+          <p className="text-xs text-gray-600 dark:text-muted-foreground mt-1">
             Pick a single session or a starter bundle to begin.
           </p>
         </div>
@@ -75,14 +75,14 @@ export default function FamilyPaymentsPage() {
       </div>
 
       <section>
-        <h2 className="text-sm font-semibold text-gray-700 mb-3">Receipts</h2>
+        <h2 className="text-sm font-semibold text-gray-700 dark:text-foreground/90 mb-3">Receipts</h2>
         {completedReceipts.length === 0 ? (
-          <div className="bg-white rounded-2xl border border-dashed border-gray-300 p-10 text-center">
-            <Receipt className="w-6 h-6 text-gray-400 mx-auto mb-2" />
-            <p className="text-sm font-semibold text-gray-700">
+          <div className="bg-white dark:bg-card rounded-2xl border border-dashed border-gray-300 dark:border-border p-10 text-center">
+            <Receipt className="w-6 h-6 text-gray-400 dark:text-muted-foreground mx-auto mb-2" />
+            <p className="text-sm font-semibold text-gray-700 dark:text-foreground/90">
               No receipts yet
             </p>
-            <p className="text-xs text-gray-500 mt-1">
+            <p className="text-xs text-gray-500 dark:text-muted-foreground mt-1">
               Completed sessions will appear here with their charge.
             </p>
           </div>
@@ -92,7 +92,7 @@ export default function FamilyPaymentsPage() {
       </section>
 
       <section>
-        <h2 className="text-sm font-semibold text-gray-700 mb-3">Purchases</h2>
+        <h2 className="text-sm font-semibold text-gray-700 dark:text-foreground/90 mb-3">Purchases</h2>
         <div className="space-y-2">
           {payments.map((p) => (
             <PurchaseRow key={p.id} payment={p} />
@@ -144,21 +144,21 @@ function SummaryTile({
   value: string;
 }) {
   return (
-    <div className="bg-white rounded-2xl border border-gray-200 p-4">
+    <div className="bg-white dark:bg-card rounded-2xl border border-gray-200 dark:border-border p-4">
       <div className="w-9 h-9 rounded-lg bg-accent2-100 text-brand flex items-center justify-center mb-3">
         <Icon className="w-4 h-4" />
       </div>
-      <p className="text-xs text-gray-500">{label}</p>
-      <p className="text-lg font-semibold text-gray-900 mt-1">{value}</p>
+      <p className="text-xs text-gray-500 dark:text-muted-foreground">{label}</p>
+      <p className="text-lg font-semibold text-gray-900 dark:text-foreground mt-1">{value}</p>
     </div>
   );
 }
 
 function ReceiptTable({ sessions }: { sessions: Session[] }) {
   return (
-    <div className="bg-white rounded-2xl border border-gray-200 overflow-hidden">
+    <div className="bg-white dark:bg-card rounded-2xl border border-gray-200 dark:border-border overflow-hidden">
       <table className="w-full text-sm">
-        <thead className="bg-gray-50 text-xs text-gray-500 uppercase tracking-wide">
+        <thead className="bg-gray-50 dark:bg-background text-xs text-gray-500 dark:text-muted-foreground uppercase tracking-wide">
           <tr>
             <th className="text-left px-4 py-3 font-medium">Date</th>
             <th className="text-left px-4 py-3 font-medium">Subject</th>
@@ -170,17 +170,17 @@ function ReceiptTable({ sessions }: { sessions: Session[] }) {
           {sessions.map((s) => {
             const teacher = familyTeacher(s.teacherId);
             return (
-              <tr key={s.id} className="hover:bg-gray-50">
-                <td className="px-4 py-3 text-gray-700">
+              <tr key={s.id} className="hover:bg-gray-50 dark:hover:bg-white/5">
+                <td className="px-4 py-3 text-gray-700 dark:text-foreground/90">
                   {new Date(s.startsAt).toLocaleDateString(undefined, {
                     day: 'numeric',
                     month: 'short',
                     year: 'numeric',
                   })}
                 </td>
-                <td className="px-4 py-3 text-gray-700">{s.subject}</td>
-                <td className="px-4 py-3 text-gray-700">{teacher.name}</td>
-                <td className="px-4 py-3 text-right font-semibold text-gray-900">
+                <td className="px-4 py-3 text-gray-700 dark:text-foreground/90">{s.subject}</td>
+                <td className="px-4 py-3 text-gray-700 dark:text-foreground/90">{teacher.name}</td>
+                <td className="px-4 py-3 text-right font-semibold text-gray-900 dark:text-foreground">
                   ${s.amount}
                 </td>
               </tr>
@@ -194,10 +194,10 @@ function ReceiptTable({ sessions }: { sessions: Session[] }) {
 
 function PurchaseRow({ payment }: { payment: Payment }) {
   return (
-    <div className="bg-white rounded-2xl border border-gray-200 p-4 flex items-center justify-between">
+    <div className="bg-white dark:bg-card rounded-2xl border border-gray-200 dark:border-border p-4 flex items-center justify-between">
       <div>
-        <p className="font-semibold text-gray-900 text-sm">{payment.plan}</p>
-        <p className="text-xs text-gray-500">
+        <p className="font-semibold text-gray-900 dark:text-foreground text-sm">{payment.plan}</p>
+        <p className="text-xs text-gray-500 dark:text-muted-foreground">
           {new Date(payment.createdAt).toLocaleDateString(undefined, {
             day: 'numeric',
             month: 'short',
@@ -207,7 +207,7 @@ function PurchaseRow({ payment }: { payment: Payment }) {
         </p>
       </div>
       <div className="text-right">
-        <p className="font-semibold text-gray-900">${payment.amount}</p>
+        <p className="font-semibold text-gray-900 dark:text-foreground">${payment.amount}</p>
         <p
           className={cn(
             'text-[11px] font-medium',

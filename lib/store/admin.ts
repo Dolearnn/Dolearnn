@@ -8,8 +8,15 @@ import {
   sessions as mockSessions,
   teachers as mockTeachers,
 } from '@/lib/mock';
+import {
+  applySessionOverrides,
+  applyTeacherOverrides,
+  getChildren,
+  getRoleNotifications,
+} from '@/lib/store/client';
 import type {
   Child,
+  Notification,
   Parent,
   Payment,
   Payout,
@@ -22,15 +29,16 @@ export function adminParents(): Parent[] {
 }
 
 export function adminChildren(): Child[] {
-  return mockChildren;
+  const real = getChildren();
+  return real.length > 0 ? real : mockChildren;
 }
 
 export function adminTeachers(): Teacher[] {
-  return mockTeachers;
+  return applyTeacherOverrides(mockTeachers);
 }
 
 export function adminSessions(): Session[] {
-  return mockSessions;
+  return applySessionOverrides(mockSessions);
 }
 
 export function adminPayments(): Payment[] {
@@ -42,15 +50,19 @@ export function adminPayouts(): Payout[] {
 }
 
 export function adminPendingIntakes(): Child[] {
-  return mockChildren.filter((c) => !!c.intake && !c.assignedTeacherId);
+  return adminChildren().filter((c) => !!c.intake && !c.assignedTeacherId);
 }
 
 export function adminChildWithIntake(): Child[] {
-  return mockChildren.filter((c) => !!c.intake);
+  return adminChildren().filter((c) => !!c.intake);
+}
+
+export function adminNotifications(): Notification[] {
+  return getRoleNotifications('admin');
 }
 
 export function adminTeacherById(id: string): Teacher | undefined {
-  return mockTeachers.find((t) => t.id === id);
+  return adminTeachers().find((t) => t.id === id);
 }
 
 export function adminChildById(id: string): Child | undefined {
@@ -66,6 +78,26 @@ export function adminParentForChild(childId: string): Parent | undefined {
 export function adminTeachersForSubject(subject: string): Teacher[] {
   const normalized = subject.toLowerCase();
   return mockTeachers.filter((t) =>
-    t.subjects.some((s) => s.toLowerCase().includes(normalized)),
+    (t.status ?? 'Active') !== 'Terminated' &&
+    t.subjects.some(
+      (s) =>
+        s.toLowerCase().includes(normalized) ||
+        normalized.includes(s.toLowerCase()),
+    ),
+  );
+}
+
+export function adminTeachersForSubjects(subjects: string[]): Teacher[] {
+  const normalized = subjects.map((subject) => subject.toLowerCase());
+  return mockTeachers.filter(
+    (t) =>
+      (t.status ?? 'Active') !== 'Terminated' &&
+      t.subjects.some((teacherSubject) =>
+        normalized.some(
+          (subject) =>
+            teacherSubject.toLowerCase().includes(subject) ||
+            subject.includes(teacherSubject.toLowerCase()),
+        ),
+      ),
   );
 }

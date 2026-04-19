@@ -52,7 +52,7 @@ export default function FamilyLearningPage() {
   }, [completed]);
 
   if (!active) {
-    return <p className="text-sm text-gray-400">Loading…</p>;
+    return <p className="text-sm text-gray-400 dark:text-muted-foreground">Loading…</p>;
   }
 
   const earnedIds = new Set(active.badges);
@@ -65,7 +65,7 @@ export default function FamilyLearningPage() {
       />
 
       <ChildSwitcher
-        children={children}
+        students={children}
         activeId={active.id}
         onChange={setActiveId}
       />
@@ -80,7 +80,7 @@ export default function FamilyLearningPage() {
       <SkillsRadarChart data={radarData} />
 
       <section>
-        <h2 className="text-sm font-semibold text-gray-700 mb-3">Badges</h2>
+        <h2 className="text-sm font-semibold text-gray-700 dark:text-foreground/90 mb-3">Badges</h2>
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
           {allBadges.map((b) => (
             <BadgeTile key={b.id} badge={b} earned={earnedIds.has(b.id)} />

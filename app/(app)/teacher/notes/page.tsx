@@ -14,13 +14,15 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
+import { StarRating } from '@/components/ui/star-rating';
 import { cn } from '@/lib/utils';
+import { addSessionNote } from '@/lib/store/client';
 import {
   teacherChild,
   teacherNotes,
   teacherSessions,
 } from '@/lib/store/teacher';
-import type { Performance, Session, SessionNote } from '@/lib/types';
+import type { Performance, Rating, Session, SessionNote } from '@/lib/types';
 
 const PERFORMANCE_OPTIONS: Performance[] = ['Excellent', 'Good', 'Needs Work'];
 
@@ -29,12 +31,13 @@ type DraftMap = Record<string, DraftNote>;
 interface DraftNote {
   covered: string;
   performance: Performance;
+  rating: Rating;
   focusNext: string;
   concerns?: string;
 }
 
 export default function TeacherNotesPage() {
-  const sessions = teacherSessions();
+  const [sessions, setSessions] = useState<Session[]>(teacherSessions());
   const [notes, setNotes] = useState<SessionNote[]>(teacherNotes());
   const [drafts, setDrafts] = useState<DraftMap>({});
 
@@ -67,6 +70,7 @@ export default function TeacherNotesPage() {
       const current: DraftNote = prev[sessionId] ?? {
         covered: '',
         performance: 'Good',
+        rating: 4,
         focusNext: '',
       };
       return { ...prev, [sessionId]: { ...current, ...patch } };
@@ -75,17 +79,24 @@ export default function TeacherNotesPage() {
 
   const submitDraft = (session: Session) => {
     const draft = drafts[session.id];
-    if (!draft || !draft.covered.trim() || !draft.focusNext.trim()) return;
+    if (!draft || !draft.covered.trim() || !draft.focusNext.trim() || !draft.rating) return;
     const newNote: SessionNote = {
       id: `n_${Math.random().toString(36).slice(2, 10)}`,
       sessionId: session.id,
       covered: draft.covered.trim(),
       performance: draft.performance,
+      rating: draft.rating,
       focusNext: draft.focusNext.trim(),
       concerns: draft.concerns?.trim() || undefined,
       createdAt: new Date().toISOString(),
     };
     setNotes((prev) => [...prev, newNote]);
+    addSessionNote(newNote);
+    setSessions((prev) =>
+      prev.map((item) =>
+        item.id === session.id ? { ...item, noteId: newNote.id } : item,
+      ),
+    );
     setDrafts((prev) => {
       const { [session.id]: _, ...rest } = prev;
       return rest;
@@ -102,15 +113,15 @@ export default function TeacherNotesPage() {
       <section>
         <div className="flex items-center gap-2 mb-3">
           <PenLine className="w-4 h-4 text-brand" />
-          <h2 className="text-sm font-semibold text-gray-700">
+          <h2 className="text-sm font-semibold text-gray-700 dark:text-foreground/90">
             Pending notes ({needsNotes.length})
           </h2>
         </div>
         {needsNotes.length === 0 ? (
-          <div className="bg-white rounded-2xl border border-dashed border-gray-300 p-8 text-center">
+          <div className="bg-white dark:bg-card rounded-2xl border border-dashed border-gray-300 dark:border-border p-8 text-center">
             <ClipboardCheck className="w-6 h-6 text-accent2-500 mx-auto mb-2" />
-            <p className="text-sm font-semibold text-gray-700">All caught up</p>
-            <p className="text-xs text-gray-500 mt-1">
+            <p className="text-sm font-semibold text-gray-700 dark:text-foreground/90">All caught up</p>
+            <p className="text-xs text-gray-500 dark:text-muted-foreground mt-1">
               No completed sessions are waiting on notes.
             </p>
           </div>
@@ -132,12 +143,12 @@ export default function TeacherNotesPage() {
       <section>
         <div className="flex items-center gap-2 mb-3">
           <ClipboardList className="w-4 h-4 text-brand" />
-          <h2 className="text-sm font-semibold text-gray-700">
+          <h2 className="text-sm font-semibold text-gray-700 dark:text-foreground/90">
             Submitted ({submittedNotes.length})
           </h2>
         </div>
         {submittedNotes.length === 0 ? (
-          <p className="text-xs text-gray-500">No notes submitted yet.</p>
+          <p className="text-xs text-gray-500 dark:text-muted-foreground">No notes submitted yet.</p>
         ) : (
           <div className="space-y-3">
             {submittedNotes.map(({ note, session }) => (
@@ -162,17 +173,21 @@ function DraftCard({
   onSubmit: () => void;
 }) {
   const child = teacherChild(session.childId);
+  const rating = draft?.rating ?? 0;
   const canSubmit =
-    !!draft && draft.covered.trim().length > 0 && draft.focusNext.trim().length > 0;
+    !!draft &&
+    draft.covered.trim().length > 0 &&
+    draft.focusNext.trim().length > 0 &&
+    rating > 0;
 
   return (
-    <div className="bg-white rounded-2xl border border-gray-200 p-5 space-y-4">
+    <div className="bg-white dark:bg-card rounded-2xl border border-gray-200 dark:border-border p-5 space-y-4">
       <div className="flex items-start justify-between gap-3">
         <div>
-          <p className="font-semibold text-gray-900">
+          <p className="font-semibold text-gray-900 dark:text-foreground">
             {child?.fullName ?? 'Student'} · {session.subject}
           </p>
-          <p className="text-xs text-gray-500">
+          <p className="text-xs text-gray-500 dark:text-muted-foreground">
             {new Date(session.startsAt).toLocaleString(undefined, {
               weekday: 'short',
               day: 'numeric',
@@ -182,6 +197,20 @@ function DraftCard({
             })}{' '}
             · {session.durationMins} min
           </p>
+        </div>
+      </div>
+
+      <div className="space-y-2">
+        <Label className="text-xs">Overall rating</Label>
+        <div className="flex items-center gap-3">
+          <StarRating
+            value={rating}
+            size="lg"
+            onChange={(v) => onChange({ rating: v as Rating })}
+          />
+          <span className="text-xs text-gray-500 dark:text-muted-foreground">
+            {rating > 0 ? `${rating} of 5` : 'Tap to rate this session'}
+          </span>
         </div>
       </div>
 
@@ -244,6 +273,9 @@ function DraftCard({
       </div>
 
       <div className="flex justify-end">
+        <p className="mr-auto text-xs text-gray-500 dark:text-muted-foreground">
+          Parents will see this feedback after you submit it.
+        </p>
         <Button
           className="bg-brand hover:bg-brand-600 rounded-full"
           disabled={!canSubmit}
@@ -271,13 +303,13 @@ function SubmittedCard({
       ? 'bg-brand/10 text-brand'
       : 'bg-amber-50 text-amber-700';
   return (
-    <div className="bg-white rounded-2xl border border-gray-200 p-5">
-      <div className="flex items-center justify-between mb-3">
-        <div>
-          <p className="text-sm font-semibold text-gray-900">
+    <div className="bg-white dark:bg-card rounded-2xl border border-gray-200 dark:border-border p-5">
+      <div className="flex items-center justify-between mb-3 gap-3">
+        <div className="min-w-0">
+          <p className="text-sm font-semibold text-gray-900 dark:text-foreground truncate">
             {child?.fullName ?? 'Student'}
           </p>
-          <p className="text-xs text-gray-500">
+          <p className="text-xs text-gray-500 dark:text-muted-foreground">
             {session.subject} ·{' '}
             {new Date(session.startsAt).toLocaleDateString(undefined, {
               day: 'numeric',
@@ -285,14 +317,17 @@ function SubmittedCard({
             })}
           </p>
         </div>
-        <span
-          className={cn(
-            'text-xs font-semibold px-2 py-1 rounded-full',
-            perfColor,
-          )}
-        >
-          {note.performance}
-        </span>
+        <div className="flex items-center gap-2 flex-shrink-0">
+          <StarRating value={note.rating} readOnly size="sm" />
+          <span
+            className={cn(
+              'text-xs font-semibold px-2 py-1 rounded-full',
+              perfColor,
+            )}
+          >
+            {note.performance}
+          </span>
+        </div>
       </div>
       <div className="space-y-2 text-sm">
         <Row label="Covered" value={note.covered} />
@@ -306,10 +341,10 @@ function SubmittedCard({
 function Row({ label, value }: { label: string; value: string }) {
   return (
     <div>
-      <p className="text-[11px] uppercase tracking-wide text-gray-400">
+      <p className="text-[11px] uppercase tracking-wide text-gray-400 dark:text-muted-foreground">
         {label}
       </p>
-      <p className="text-gray-700">{value}</p>
+      <p className="text-gray-700 dark:text-foreground/90">{value}</p>
     </div>
   );
 }

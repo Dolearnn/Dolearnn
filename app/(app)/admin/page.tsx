@@ -12,6 +12,7 @@ import {
 import PageHeader from '@/components/dashboard/PageHeader';
 import StatTile from '@/components/dashboard/StatTile';
 import { Button } from '@/components/ui/button';
+import { displayGrade, displaySubject } from '@/lib/types';
 import { cn } from '@/lib/utils';
 import {
   adminPayments,
@@ -78,7 +79,7 @@ export default function AdminHome() {
 
       <section>
         <div className="flex items-center justify-between mb-3">
-          <h2 className="text-sm font-semibold text-gray-700">
+          <h2 className="text-sm font-semibold text-gray-700 dark:text-foreground/90">
             Intakes waiting for a match
           </h2>
           <Link
@@ -89,8 +90,8 @@ export default function AdminHome() {
           </Link>
         </div>
         {pending.length === 0 ? (
-          <div className="bg-white rounded-2xl border border-dashed border-gray-300 p-8 text-center">
-            <p className="text-sm text-gray-500">
+          <div className="bg-white dark:bg-card rounded-2xl border border-dashed border-gray-300 dark:border-border p-8 text-center">
+            <p className="text-sm text-gray-500 dark:text-muted-foreground">
               Every intake has been matched. Nice work.
             </p>
           </div>
@@ -99,12 +100,12 @@ export default function AdminHome() {
             {pending.slice(0, 3).map((c) => (
               <div
                 key={c.id}
-                className="bg-white rounded-2xl border border-gray-200 p-4 flex flex-col sm:flex-row sm:items-center gap-3"
+                className="bg-white dark:bg-card rounded-2xl border border-gray-200 dark:border-border p-4 flex flex-col sm:flex-row sm:items-center gap-3"
               >
                 <div className="flex-1">
-                  <p className="font-semibold text-gray-900">{c.fullName}</p>
-                  <p className="text-xs text-gray-500">
-                    {c.grade} · {c.intake?.subject} · {c.intake?.learningGoal}
+                  <p className="font-semibold text-gray-900 dark:text-foreground">{c.fullName}</p>
+                  <p className="text-xs text-gray-500 dark:text-muted-foreground">
+                    {displayGrade(c)} · {c.intake ? displaySubject(c.intake) : ''} · {c.intake?.learningGoal}
                   </p>
                 </div>
                 <Link href={`/admin/intakes?child=${c.id}`}>
@@ -124,7 +125,7 @@ export default function AdminHome() {
       <div className="grid lg:grid-cols-2 gap-4">
         <section>
           <div className="flex items-center justify-between mb-3">
-            <h2 className="text-sm font-semibold text-gray-700">
+            <h2 className="text-sm font-semibold text-gray-700 dark:text-foreground/90">
               Next sessions
             </h2>
             <Link
@@ -140,17 +141,17 @@ export default function AdminHome() {
               return (
                 <div
                   key={s.id}
-                  className="bg-white rounded-2xl border border-gray-200 p-4"
+                  className="bg-white dark:bg-card rounded-2xl border border-gray-200 dark:border-border p-4"
                 >
                   <div className="flex items-center justify-between">
-                    <p className="font-semibold text-gray-900">
+                    <p className="font-semibold text-gray-900 dark:text-foreground">
                       {s.subject} · {teacher?.name ?? 'Teacher'}
                     </p>
                     <span className="text-[11px] text-brand bg-brand/10 px-2 py-0.5 rounded-full font-medium">
                       {s.status}
                     </span>
                   </div>
-                  <p className="text-xs text-gray-500 mt-1">
+                  <p className="text-xs text-gray-500 dark:text-muted-foreground mt-1">
                     {new Date(s.startsAt).toLocaleString(undefined, {
                       weekday: 'short',
                       day: 'numeric',
@@ -164,14 +165,14 @@ export default function AdminHome() {
               );
             })}
             {upcoming.length === 0 && (
-              <p className="text-xs text-gray-500">No upcoming sessions.</p>
+              <p className="text-xs text-gray-500 dark:text-muted-foreground">No upcoming sessions.</p>
             )}
           </div>
         </section>
 
         <section>
           <div className="flex items-center justify-between mb-3">
-            <h2 className="text-sm font-semibold text-gray-700">Top teachers</h2>
+            <h2 className="text-sm font-semibold text-gray-700 dark:text-foreground/90">Top teachers</h2>
             <Link
               href="/admin/teachers"
               className="text-xs text-brand font-medium"
@@ -186,7 +187,7 @@ export default function AdminHome() {
               .map((t) => (
                 <div
                   key={t.id}
-                  className="bg-white rounded-2xl border border-gray-200 p-4 flex items-center gap-3"
+                  className="bg-white dark:bg-card rounded-2xl border border-gray-200 dark:border-border p-4 flex items-center gap-3"
                 >
                   <div className="w-10 h-10 rounded-full bg-brand text-white flex items-center justify-center text-sm font-semibold">
                     {t.name
@@ -196,10 +197,10 @@ export default function AdminHome() {
                       .slice(0, 2)}
                   </div>
                   <div className="flex-1 min-w-0">
-                    <p className="font-semibold text-gray-900 text-sm truncate">
+                    <p className="font-semibold text-gray-900 dark:text-foreground text-sm truncate">
                       {t.name}
                     </p>
-                    <p className="text-xs text-gray-500 truncate">
+                    <p className="text-xs text-gray-500 dark:text-muted-foreground truncate">
                       {t.subjects.join(' · ')}
                     </p>
                   </div>
@@ -212,7 +213,7 @@ export default function AdminHome() {
                     >
                       ★ {t.rating.toFixed(1)}
                     </p>
-                    <p className="text-[11px] text-gray-500">
+                    <p className="text-[11px] text-gray-500 dark:text-muted-foreground">
                       {t.totalSessions} sessions
                     </p>
                   </div>
@@ -260,14 +261,14 @@ function QuickLink({
   return (
     <Link
       href={href}
-      className="bg-white rounded-2xl border border-gray-200 p-4 hover:border-brand transition flex items-center gap-3"
+      className="bg-white dark:bg-card rounded-2xl border border-gray-200 dark:border-border p-4 hover:border-brand transition flex items-center gap-3"
     >
       <div className="w-10 h-10 rounded-lg bg-accent2-100 text-brand flex items-center justify-center">
         <Icon className="w-4 h-4" />
       </div>
       <div>
-        <p className="text-sm font-semibold text-gray-900">{label}</p>
-        <p className="text-xs text-gray-500">{sub}</p>
+        <p className="text-sm font-semibold text-gray-900 dark:text-foreground">{label}</p>
+        <p className="text-xs text-gray-500 dark:text-muted-foreground">{sub}</p>
       </div>
     </Link>
   );

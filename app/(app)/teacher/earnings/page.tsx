@@ -7,34 +7,31 @@ import StatTile from '@/components/dashboard/StatTile';
 import { cn } from '@/lib/utils';
 import {
   teacherEarnings,
+  teacherMe,
   teacherPayouts,
 } from '@/lib/store/teacher';
 
 export default function TeacherEarningsPage() {
+  const teacher = teacherMe();
   const earnings = teacherEarnings();
   const payouts = teacherPayouts();
 
   const totals = useMemo(() => {
-    const paid = earnings
-      .filter((e) => e.status === 'Paid')
-      .reduce((sum, e) => sum + e.amount, 0);
-    const pending = earnings
-      .filter((e) => e.status === 'Pending')
-      .reduce((sum, e) => sum + e.amount, 0);
+    const now = new Date();
+    const monthKey = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}`;
+    const thisMonth = earnings.filter((e) => e.date.startsWith(monthKey));
     const payoutTotal = payouts.reduce((sum, p) => sum + p.amount, 0);
-    const perSession = earnings.length
-      ? Math.round(
-          earnings.reduce((sum, e) => sum + e.amount, 0) / earnings.length,
-        )
-      : 0;
-    return { paid, pending, payoutTotal, perSession };
+    const verifiedHours =
+      thisMonth.reduce((sum, e) => sum + e.durationMins, 0) / 60;
+    const expected = thisMonth.reduce((sum, e) => sum + e.amount, 0);
+    return { expected, payoutTotal, verifiedHours };
   }, [earnings, payouts]);
 
   return (
     <div className="space-y-6">
       <PageHeader
         title="Earnings"
-        description="Your payouts and upcoming balance."
+        description="Monthly payout estimate based on verified teaching hours."
       />
 
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
@@ -47,36 +44,37 @@ export default function TeacherEarningsPage() {
         />
         <StatTile
           icon={DollarSign}
-          label="Paid this cycle"
-          value={`$${totals.paid}`}
+          label="Expected this month"
+          value={`$${totals.expected}`}
+          sub="verified sessions only"
         />
         <StatTile
           icon={Clock}
-          label="Pending"
-          value={`$${totals.pending}`}
-          sub={totals.pending > 0 ? 'settles next payout' : 'all cleared'}
+          label="Verified hours"
+          value={totals.verifiedHours.toFixed(1)}
+          sub="family + teacher confirmed"
         />
         <StatTile
           icon={TrendingUp}
-          label="Avg per session"
-          value={`$${totals.perSession}`}
+          label="Admin-set rate"
+          value={`$${teacher.hourlyRate}/hr`}
         />
       </div>
 
       <section>
-        <h2 className="text-sm font-semibold text-gray-700 mb-3">
-          Session earnings
+        <h2 className="text-sm font-semibold text-gray-700 dark:text-foreground/90 mb-3">
+          Verified session earnings
         </h2>
         {earnings.length === 0 ? (
-          <div className="bg-white rounded-2xl border border-dashed border-gray-300 p-10 text-center">
-            <p className="text-sm text-gray-500">
+          <div className="bg-white dark:bg-card rounded-2xl border border-dashed border-gray-300 dark:border-border p-10 text-center">
+            <p className="text-sm text-gray-500 dark:text-muted-foreground">
               No session earnings yet — teach your first session to get paid.
             </p>
           </div>
         ) : (
-          <div className="bg-white rounded-2xl border border-gray-200 overflow-hidden">
+          <div className="bg-white dark:bg-card rounded-2xl border border-gray-200 dark:border-border overflow-hidden">
             <table className="w-full text-sm">
-              <thead className="bg-gray-50 text-xs text-gray-500 uppercase tracking-wide">
+              <thead className="bg-gray-50 dark:bg-background text-xs text-gray-500 dark:text-muted-foreground uppercase tracking-wide">
                 <tr>
                   <th className="text-left px-4 py-3 font-medium">Date</th>
                   <th className="text-left px-4 py-3 font-medium">Student</th>
@@ -88,20 +86,20 @@ export default function TeacherEarningsPage() {
               </thead>
               <tbody className="divide-y divide-gray-100">
                 {earnings.map((e) => (
-                  <tr key={e.sessionId} className="hover:bg-gray-50">
-                    <td className="px-4 py-3 text-gray-700">
+                  <tr key={e.sessionId} className="hover:bg-gray-50 dark:hover:bg-white/5">
+                    <td className="px-4 py-3 text-gray-700 dark:text-foreground/90">
                       {new Date(e.date).toLocaleDateString(undefined, {
                         day: 'numeric',
                         month: 'short',
                         year: 'numeric',
                       })}
                     </td>
-                    <td className="px-4 py-3 text-gray-700">{e.studentName}</td>
-                    <td className="px-4 py-3 text-gray-700">{e.subject}</td>
-                    <td className="px-4 py-3 text-right text-gray-500">
+                    <td className="px-4 py-3 text-gray-700 dark:text-foreground/90">{e.studentName}</td>
+                    <td className="px-4 py-3 text-gray-700 dark:text-foreground/90">{e.subject}</td>
+                    <td className="px-4 py-3 text-right text-gray-500 dark:text-muted-foreground">
                       {e.durationMins} min
                     </td>
-                    <td className="px-4 py-3 text-right font-semibold text-gray-900">
+                    <td className="px-4 py-3 text-right font-semibold text-gray-900 dark:text-foreground">
                       ${e.amount}
                     </td>
                     <td className="px-4 py-3 text-right">
@@ -125,21 +123,21 @@ export default function TeacherEarningsPage() {
       </section>
 
       <section>
-        <h2 className="text-sm font-semibold text-gray-700 mb-3">Payouts</h2>
+        <h2 className="text-sm font-semibold text-gray-700 dark:text-foreground/90 mb-3">Payouts</h2>
         {payouts.length === 0 ? (
-          <p className="text-xs text-gray-500">No payouts yet.</p>
+          <p className="text-xs text-gray-500 dark:text-muted-foreground">No payouts yet.</p>
         ) : (
           <div className="space-y-2">
             {payouts.map((p) => (
               <div
                 key={p.id}
-                className="bg-white rounded-2xl border border-gray-200 p-4 flex items-center justify-between"
+                className="bg-white dark:bg-card rounded-2xl border border-gray-200 dark:border-border p-4 flex items-center justify-between"
               >
                 <div>
-                  <p className="font-semibold text-gray-900 text-sm">
+                  <p className="font-semibold text-gray-900 dark:text-foreground text-sm">
                     Payout via {p.method}
                   </p>
-                  <p className="text-xs text-gray-500">
+                  <p className="text-xs text-gray-500 dark:text-muted-foreground">
                     {new Date(p.date).toLocaleDateString(undefined, {
                       day: 'numeric',
                       month: 'short',
@@ -147,7 +145,7 @@ export default function TeacherEarningsPage() {
                     })}
                   </p>
                 </div>
-                <p className="font-semibold text-gray-900">${p.amount}</p>
+                <p className="font-semibold text-gray-900 dark:text-foreground">${p.amount}</p>
               </div>
             ))}
           </div>

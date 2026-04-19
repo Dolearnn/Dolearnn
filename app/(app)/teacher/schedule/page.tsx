@@ -49,7 +49,7 @@ export default function TeacherSchedulePage() {
       />
 
       <Tabs defaultValue="Upcoming" className="space-y-4">
-        <TabsList className="bg-white border border-gray-200 rounded-full p-1 w-fit">
+        <TabsList className="bg-white dark:bg-card border border-gray-200 dark:border-border rounded-full p-1 w-fit">
           {TAB_ORDER.map((status) => (
             <TabsTrigger
               key={status}
@@ -73,7 +73,7 @@ export default function TeacherSchedulePage() {
           ) : (
             byDay.map(([day, items]) => (
               <div key={day} className="space-y-2">
-                <p className="text-xs uppercase tracking-wide text-gray-500 font-medium">
+                <p className="text-xs uppercase tracking-wide text-gray-500 dark:text-muted-foreground font-medium">
                   {day}
                 </p>
                 <div className="space-y-3">
@@ -112,10 +112,10 @@ export default function TeacherSchedulePage() {
 
 function EmptyState({ title, hint }: { title: string; hint: string }) {
   return (
-    <div className="bg-white border border-dashed border-gray-300 rounded-2xl p-10 text-center">
-      <CalendarX2 className="w-6 h-6 text-gray-400 mx-auto mb-2" />
-      <p className="text-sm font-semibold text-gray-700">{title}</p>
-      {hint && <p className="text-xs text-gray-500 mt-1">{hint}</p>}
+    <div className="bg-white dark:bg-card border border-dashed border-gray-300 dark:border-border rounded-2xl p-10 text-center">
+      <CalendarX2 className="w-6 h-6 text-gray-400 dark:text-muted-foreground mx-auto mb-2" />
+      <p className="text-sm font-semibold text-gray-700 dark:text-foreground/90">{title}</p>
+      {hint && <p className="text-xs text-gray-500 dark:text-muted-foreground mt-1">{hint}</p>}
     </div>
   );
 }

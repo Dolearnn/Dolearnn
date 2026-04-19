@@ -14,13 +14,7 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
+import { SelectWithOther } from '@/components/forms/SelectWithOther';
 import { addChild, updateChild } from '@/lib/store/client';
 import type { Child, GradeLevel } from '@/lib/types';
 
@@ -35,21 +29,30 @@ const grades: GradeLevel[] = [
   'Other',
 ];
 
-const schema = z.object({
-  fullName: z.string().min(2, 'Enter your child&apos;s full name'),
-  age: z.coerce.number().int().min(5, 'Minimum age 5').max(25, 'Maximum age 25'),
-  grade: z.enum([
-    'Primary',
-    'JSS',
-    'SSS',
-    'College Year 1',
-    'College Year 2',
-    'College Year 3',
-    'College Year 4',
-    'Other',
-  ]),
-  school: z.string().optional(),
-});
+const schema = z
+  .object({
+    fullName: z.string().min(2, 'Enter your child&apos;s full name'),
+    age: z.coerce.number().int().min(5, 'Minimum age 5').max(25, 'Maximum age 25'),
+    grade: z.enum([
+      'Primary',
+      'JSS',
+      'SSS',
+      'College Year 1',
+      'College Year 2',
+      'College Year 3',
+      'College Year 4',
+      'Other',
+    ]),
+    gradeOther: z.string().optional(),
+    school: z.string().optional(),
+  })
+  .refine(
+    (v) => v.grade !== 'Other' || (v.gradeOther?.trim().length ?? 0) >= 2,
+    {
+      path: ['gradeOther'],
+      message: 'Please specify the grade level',
+    },
+  );
 
 type Values = z.infer<typeof schema>;
 
@@ -67,16 +70,21 @@ export default function ChildProfileForm({
       fullName: initial?.fullName ?? '',
       age: initial?.age ?? 10,
       grade: initial?.grade ?? 'Primary',
+      gradeOther: initial?.gradeOther ?? '',
       school: initial?.school ?? '',
     },
   });
 
   const onSubmit = (values: Values) => {
+    const payload = {
+      ...values,
+      gradeOther: values.grade === 'Other' ? values.gradeOther?.trim() : undefined,
+    };
     if (mode === 'create') {
-      const child = addChild(values);
+      const child = addChild(payload);
       router.push(`/family/children/${child.id}/intake`);
     } else if (initial) {
-      updateChild(initial.id, values);
+      updateChild(initial.id, payload);
       router.push(`/family/children/${initial.id}`);
     }
   };
@@ -117,21 +125,23 @@ export default function ChildProfileForm({
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Grade level</FormLabel>
-                <Select onValueChange={field.onChange} defaultValue={field.value}>
-                  <FormControl>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Select grade" />
-                    </SelectTrigger>
-                  </FormControl>
-                  <SelectContent>
-                    {grades.map((g) => (
-                      <SelectItem key={g} value={g}>
-                        {g}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
+                <FormControl>
+                  <SelectWithOther
+                    value={field.value}
+                    onValueChange={(v) => field.onChange(v as GradeLevel)}
+                    otherValue={form.watch('gradeOther') ?? ''}
+                    onOtherChange={(v) => form.setValue('gradeOther', v, { shouldValidate: true })}
+                    options={grades}
+                    placeholder="Select grade"
+                    otherPlaceholder="e.g. Year 11 (UK), Homeschool"
+                  />
+                </FormControl>
                 <FormMessage />
+                <FormField
+                  control={form.control}
+                  name="gradeOther"
+                  render={() => <FormMessage />}
+                />
               </FormItem>
             )}
           />

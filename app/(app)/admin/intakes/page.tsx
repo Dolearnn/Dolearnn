@@ -9,9 +9,15 @@ import { cn } from '@/lib/utils';
 import {
   adminChildWithIntake,
   adminTeachers,
-  adminTeachersForSubject,
+  adminTeachersForSubjects,
 } from '@/lib/store/admin';
-import type { Child, Teacher } from '@/lib/types';
+import {
+  displayGrade,
+  displaySchedule,
+  displaySubject,
+  type Child,
+  type Teacher,
+} from '@/lib/types';
 
 type Filter = 'All' | 'Pending' | 'Matched';
 
@@ -31,7 +37,7 @@ export default function AdminIntakesPage() {
         const q = query.toLowerCase();
         if (
           !c.fullName.toLowerCase().includes(q) &&
-          !c.intake?.subject.toLowerCase().includes(q)
+          !(c.intake && displaySubject(c.intake).toLowerCase().includes(q))
         )
           return false;
       }
@@ -66,7 +72,7 @@ export default function AdminIntakesPage() {
       />
 
       <div className="flex flex-col sm:flex-row sm:items-center gap-3 justify-between">
-        <div className="flex items-center gap-2 bg-white border border-gray-200 rounded-full p-1 w-fit">
+        <div className="flex items-center gap-2 bg-white dark:bg-card border border-gray-200 dark:border-border rounded-full p-1 w-fit">
           {(['Pending', 'Matched', 'All'] as Filter[]).map((f) => (
             <button
               key={f}
@@ -75,7 +81,7 @@ export default function AdminIntakesPage() {
                 'px-4 py-1.5 rounded-full text-sm transition',
                 filter === f
                   ? 'bg-brand text-white'
-                  : 'text-gray-600 hover:text-gray-900',
+                  : 'text-gray-600 dark:text-muted-foreground hover:text-gray-900',
               )}
             >
               {f}
@@ -90,7 +96,7 @@ export default function AdminIntakesPage() {
           ))}
         </div>
         <div className="relative w-full sm:w-64">
-          <Search className="w-4 h-4 text-gray-400 absolute left-3 top-1/2 -translate-y-1/2" />
+          <Search className="w-4 h-4 text-gray-400 dark:text-muted-foreground absolute left-3 top-1/2 -translate-y-1/2" />
           <Input
             value={query}
             onChange={(e) => setQuery(e.target.value)}
@@ -101,9 +107,9 @@ export default function AdminIntakesPage() {
       </div>
 
       {filtered.length === 0 ? (
-        <div className="bg-white rounded-2xl border border-dashed border-gray-300 p-10 text-center">
+        <div className="bg-white dark:bg-card rounded-2xl border border-dashed border-gray-300 dark:border-border p-10 text-center">
           <ClipboardCheck className="w-6 h-6 text-accent2-500 mx-auto mb-2" />
-          <p className="text-sm font-semibold text-gray-700">
+          <p className="text-sm font-semibold text-gray-700 dark:text-foreground/90">
             {filter === 'Pending'
               ? 'Every intake is matched'
               : 'No intakes match this filter'}
@@ -140,22 +146,29 @@ function IntakeCard({
   const intake = child.intake;
   if (!intake) return null;
 
-  const suggestions = adminTeachersForSubject(intake.subject);
+  const selectedSubjects = intake.subjects?.length
+    ? intake.subjects.map((subject) =>
+        subject === 'Other' && intake.subjectOther?.trim()
+          ? intake.subjectOther.trim()
+          : subject,
+      )
+    : [displaySubject(intake)];
+  const suggestions = adminTeachersForSubjects(selectedSubjects);
   const assigned = child.assignedTeacherId
     ? allTeachers.find((t) => t.id === child.assignedTeacherId)
     : null;
 
   return (
-    <div className="bg-white rounded-2xl border border-gray-200 p-5 space-y-4">
+    <div className="bg-white dark:bg-card rounded-2xl border border-gray-200 dark:border-border p-5 space-y-4">
       <div className="flex items-start justify-between gap-3 flex-wrap">
         <div>
-          <p className="font-semibold text-gray-900">
+          <p className="font-semibold text-gray-900 dark:text-foreground">
             {child.fullName}{' '}
-            <span className="text-xs text-gray-500 font-normal">
-              · {child.grade} · Age {child.age}
+            <span className="text-xs text-gray-500 dark:text-muted-foreground font-normal">
+              · {displayGrade(child)} · Age {child.age}
             </span>
           </p>
-          <p className="text-xs text-gray-500 mt-1">
+          <p className="text-xs text-gray-500 dark:text-muted-foreground mt-1">
             {child.school ?? 'No school listed'}
           </p>
         </div>
@@ -170,13 +183,13 @@ function IntakeCard({
       </div>
 
       <div className="grid sm:grid-cols-2 gap-x-6 gap-y-2 text-xs">
-        <Row label="Subject" value={intake.subject} />
+        <Row label="Subject" value={displaySubject(intake)} />
         <Row label="Goal" value={intake.learningGoal} />
         <Row label="Current level" value={intake.currentLevel} />
         <Row label="Teacher pref" value={intake.teacherGenderPref} />
         <Row
           label="Availability"
-          value={`${intake.preferredDays.join(', ')} · ${intake.preferredTime}`}
+          value={displaySchedule(intake)}
         />
         <Row
           label="Frequency"
@@ -201,10 +214,10 @@ function IntakeCard({
                 .slice(0, 2)}
             </div>
             <div className="min-w-0">
-              <p className="text-sm font-semibold text-gray-900 truncate">
+              <p className="text-sm font-semibold text-gray-900 dark:text-foreground truncate">
                 {assigned.name}
               </p>
-              <p className="text-xs text-gray-500 truncate">
+              <p className="text-xs text-gray-500 dark:text-muted-foreground truncate">
                 ★ {assigned.rating.toFixed(1)} ·{' '}
                 {assigned.subjects.join(', ')}
               </p>
@@ -222,13 +235,13 @@ function IntakeCard({
         <div>
           <div className="flex items-center gap-2 mb-2">
             <Sparkles className="w-4 h-4 text-brand" />
-            <p className="text-xs font-semibold text-gray-700">
+            <p className="text-xs font-semibold text-gray-700 dark:text-foreground/90">
               Suggested teachers
             </p>
           </div>
           {suggestions.length === 0 ? (
-            <p className="text-xs text-gray-500">
-              No teacher currently covers {intake.subject}. Try a different
+            <p className="text-xs text-gray-500 dark:text-muted-foreground">
+              No teacher currently covers {displaySubject(intake)}. Try a different
               subject or add a teacher to the roster.
             </p>
           ) : (
@@ -252,12 +265,12 @@ function SuggestionRow({
   onAssign: (teacherId: string) => void;
 }) {
   return (
-    <div className="bg-gray-50 rounded-xl p-3 flex items-center justify-between gap-3">
+    <div className="bg-gray-50 dark:bg-background rounded-xl p-3 flex items-center justify-between gap-3">
       <div className="min-w-0">
-        <p className="text-sm font-semibold text-gray-900 truncate">
+        <p className="text-sm font-semibold text-gray-900 dark:text-foreground truncate">
           {teacher.name}
         </p>
-        <p className="text-xs text-gray-500 truncate">
+        <p className="text-xs text-gray-500 dark:text-muted-foreground truncate">
           ★ {teacher.rating.toFixed(1)} · ${teacher.hourlyRate}/hr ·{' '}
           {teacher.totalSessions} sessions
         </p>
@@ -284,10 +297,10 @@ function Row({
 }) {
   return (
     <div className={cn('flex gap-2', full && 'sm:col-span-2')}>
-      <span className="text-gray-400 uppercase tracking-wide text-[10px] w-20 shrink-0 pt-0.5">
+      <span className="text-gray-400 dark:text-muted-foreground uppercase tracking-wide text-[10px] w-20 shrink-0 pt-0.5">
         {label}
       </span>
-      <span className="text-gray-700">{value}</span>
+      <span className="text-gray-700 dark:text-foreground/90">{value}</span>
     </div>
   );
 }

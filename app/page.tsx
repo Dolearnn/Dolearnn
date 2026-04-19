@@ -11,6 +11,7 @@ import {
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import TestimonialSlider from '@/components/Home/TestimonialSlider';
+import { ThemeToggle } from '@/components/theme-toggle';
 import {
   Award,
   Check,
@@ -130,30 +131,35 @@ export default function Home() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
 
   return (
-    <main className="min-h-screen bg-white">
+    <main className="min-h-screen bg-white dark:bg-background">
       {/* Nav */}
-      <nav className="fixed top-0 w-full bg-white/95 backdrop-blur-sm z-50 border-b border-gray-100">
+      <nav className="fixed top-0 w-full bg-white/95 dark:bg-background/80 backdrop-blur-sm z-50 border-b border-gray-100 dark:border-border">
         <div className="max-w-7xl mx-auto px-6 py-2">
           <div className="flex items-center justify-between">
-            <Image src={logo} alt="DoLearn" className="w-[100px] h-[20px]" />
-            <div className="hidden md:flex items-center space-x-6 text-sm text-gray-700">
-              <Link href="#how-it-works" className="hover:text-brand transition">
+            <Image
+              src={logo}
+              alt="DoLearn"
+              className="w-[100px] h-[20px] dark:invert dark:brightness-200"
+            />
+            <div className="hidden md:flex items-center space-x-6 text-sm text-gray-700 dark:text-foreground/90">
+              <Link href="#how-it-works" className="hover:text-brand dark:hover:text-accent2-400 transition">
                 How it works
               </Link>
-              <Link href="#parents" className="hover:text-brand transition">
+              <Link href="#parents" className="hover:text-brand dark:hover:text-accent2-400 transition">
                 For parents
               </Link>
-              <Link href="#students" className="hover:text-brand transition">
+              <Link href="#students" className="hover:text-brand dark:hover:text-accent2-400 transition">
                 For students
               </Link>
-              <Link href="#pricing" className="hover:text-brand transition">
+              <Link href="#pricing" className="hover:text-brand dark:hover:text-accent2-400 transition">
                 Pricing
               </Link>
-              <Link href="#faq" className="hover:text-brand transition">
+              <Link href="#faq" className="hover:text-brand dark:hover:text-accent2-400 transition">
                 FAQ
               </Link>
             </div>
             <div className="flex items-center space-x-3">
+              <ThemeToggle />
               <Link href="/login" className="hidden md:block">
                 <Button variant="outline" className="rounded-full">
                   Log in
@@ -170,7 +176,7 @@ export default function Home() {
       </nav>
 
       {/* Hero */}
-      <section className="pt-28 lg:pt-32 pb-16 bg-accent2-50">
+      <section className="pt-28 lg:pt-32 pb-16 bg-accent2-50 dark:bg-gradient-to-br dark:from-background dark:to-brand-900/40">
         <div className="max-w-7xl mx-auto px-6">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <motion.div
@@ -178,16 +184,16 @@ export default function Home() {
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8 }}
             >
-              <span className="inline-flex items-center gap-2 bg-white border border-accent2-200 text-brand text-xs font-medium px-3 py-1 rounded-full mb-4">
+              <span className="inline-flex items-center gap-2 bg-white dark:bg-card border border-accent2-200 text-brand text-xs font-medium px-3 py-1 rounded-full mb-4">
                 <Sparkles className="w-3.5 h-3.5" />
                 Curated pairing model
               </span>
-              <h1 className="text-3xl lg:text-5xl font-bold text-gray-900 leading-tight mb-4">
+              <h1 className="text-3xl lg:text-5xl font-bold text-gray-900 dark:text-foreground leading-tight mb-4">
                 The right teacher,{' '}
-                <span className="text-brand">hand-picked</span> for your{' '}
+                <span className="text-brand dark:text-accent2-400">hand-picked</span> for your{' '}
                 <span className="text-accent2-500">child.</span>
               </h1>
-              <p className="text-base lg:text-lg text-gray-600 mb-8 max-w-lg">
+              <p className="text-base lg:text-lg text-gray-600 dark:text-muted-foreground mb-8 max-w-lg">
                 DoLearn connects international students and parents with vetted
                 teachers for live 1-on-1 sessions on Google Meet. No searching,
                 no guessing — just the right match.
@@ -225,7 +231,7 @@ export default function Home() {
                     className="w-9 h-9 rounded-full border-2 border-white object-cover"
                   />
                 </div>
-                <div className="text-xs text-gray-600">
+                <div className="text-xs text-gray-600 dark:text-muted-foreground">
                   <div className="flex text-yellow-400 text-sm">
                     <Star className="w-3.5 h-3.5 fill-current" />
                     <Star className="w-3.5 h-3.5 fill-current" />
@@ -233,7 +239,7 @@ export default function Home() {
                     <Star className="w-3.5 h-3.5 fill-current" />
                     <Star className="w-3.5 h-3.5 fill-current" />
                   </div>
-                  <span className="font-medium text-gray-800">
+                  <span className="font-medium text-gray-800 dark:text-foreground">
                     3,000+ learners matched
                   </span>{' '}
                   globally
@@ -266,16 +272,16 @@ export default function Home() {
                   alt="teacher"
                   className="absolute top-[130px] left-20 w-24 h-24 rounded-full object-cover border-4 border-white shadow-md"
                 />
-                <div className="bg-white z-20 absolute bottom-24 -left-24 shadow-xl rounded-xl px-4 py-3 w-[230px]">
+                <div className="bg-white dark:bg-card z-20 absolute bottom-24 -left-24 shadow-xl rounded-xl px-4 py-3 w-[230px]">
                   <div className="flex items-center gap-2">
                     <div className="w-8 h-8 rounded-full bg-accent2-100 text-brand flex items-center justify-center">
                       <UserCheck className="w-4 h-4" />
                     </div>
-                    <p className="text-xs font-semibold text-gray-900">
+                    <p className="text-xs font-semibold text-gray-900 dark:text-foreground">
                       Paired in under 24h
                     </p>
                   </div>
-                  <p className="text-[11px] text-gray-500 mt-2 leading-relaxed">
+                  <p className="text-[11px] text-gray-500 dark:text-muted-foreground mt-2 leading-relaxed">
                     Our team matched Zara with a Maths teacher based on goals,
                     availability, and personality.
                   </p>
@@ -287,7 +293,7 @@ export default function Home() {
       </section>
 
       {/* How It Works */}
-      <section id="how-it-works" className="py-20 bg-white">
+      <section id="how-it-works" className="py-20 bg-white dark:bg-card">
         <div className="max-w-7xl mx-auto px-6">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -302,7 +308,7 @@ export default function Home() {
             <h2 className="text-3xl font-bold text-brand mb-3">
               From intake to your first session in under 24 hours
             </h2>
-            <p className="text-gray-600 max-w-2xl mx-auto">
+            <p className="text-gray-600 dark:text-muted-foreground max-w-2xl mx-auto">
               No endless teacher profiles. Just four steps and a team that owns
               the match.
             </p>
@@ -317,9 +323,10 @@ export default function Home() {
                   initial={{ opacity: 0, y: 30 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
+                  whileHover={{ y: -4 }}
                   transition={{ duration: 0.5, delay: i * 0.08 }}
                 >
-                  <Card className="border-none shadow-sm h-full">
+                  <Card className="border-none shadow-sm h-full bg-white dark:bg-card">
                     <CardContent className="p-6">
                       <div className="flex items-center justify-between mb-4">
                         <div className="w-11 h-11 rounded-xl bg-accent2-100 text-brand flex items-center justify-center">
@@ -329,10 +336,10 @@ export default function Home() {
                           0{i + 1}
                         </span>
                       </div>
-                      <h3 className="text-lg font-semibold text-gray-900 mb-2">
+                      <h3 className="text-lg font-semibold text-gray-900 dark:text-foreground mb-2">
                         {step.title}
                       </h3>
-                      <p className="text-sm text-gray-600 leading-relaxed">
+                      <p className="text-sm text-gray-600 dark:text-muted-foreground leading-relaxed">
                         {step.body}
                       </p>
                     </CardContent>
@@ -407,7 +414,7 @@ export default function Home() {
       </section>
 
       {/* For Parents & Students */}
-      <section className="py-20 bg-white">
+      <section className="py-20 bg-white dark:bg-card">
         <div className="max-w-7xl mx-auto px-6">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -422,7 +429,7 @@ export default function Home() {
             <h2 className="text-3xl font-bold text-brand mb-3">
               One platform. Two perspectives.
             </h2>
-            <p className="text-gray-600 max-w-2xl mx-auto">
+            <p className="text-gray-600 dark:text-muted-foreground max-w-2xl mx-auto">
               Parents see everything they need to trust the process. Students
               see a learning journey worth showing up for.
             </p>
@@ -435,7 +442,7 @@ export default function Home() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5 }}
-              className="bg-accent2-50 rounded-3xl p-8 border border-accent2-100"
+              className="bg-accent2-50 dark:bg-accent2-500/10 rounded-3xl p-8 border border-accent2-100 dark:border-accent2-500/20"
             >
               <div className="w-12 h-12 rounded-xl bg-brand text-white flex items-center justify-center mb-5">
                 <Users className="w-5 h-5" />
@@ -443,7 +450,7 @@ export default function Home() {
               <h3 className="text-xl font-bold text-brand mb-2">
                 For parents
               </h3>
-              <p className="text-sm text-gray-700 mb-6">
+              <p className="text-sm text-gray-700 dark:text-foreground/90 mb-6">
                 Clear, action-oriented tools to monitor your child&apos;s
                 learning.
               </p>
@@ -452,10 +459,10 @@ export default function Home() {
                   const Icon = f.icon;
                   return (
                     <li key={f.label} className="flex gap-3 items-start">
-                      <div className="w-8 h-8 rounded-lg bg-white text-brand flex items-center justify-center flex-shrink-0">
+                      <div className="w-8 h-8 rounded-lg bg-white dark:bg-card text-brand flex items-center justify-center flex-shrink-0">
                         <Icon className="w-4 h-4" />
                       </div>
-                      <p className="text-sm text-gray-800 pt-1.5">{f.label}</p>
+                      <p className="text-sm text-gray-800 dark:text-foreground pt-1.5">{f.label}</p>
                     </li>
                   );
                 })}
@@ -482,7 +489,7 @@ export default function Home() {
                   const Icon = f.icon;
                   return (
                     <li key={f.label} className="flex gap-3 items-start">
-                      <div className="w-8 h-8 rounded-lg bg-white/10 text-accent2-400 flex items-center justify-center flex-shrink-0">
+                      <div className="w-8 h-8 rounded-lg bg-white dark:bg-card/10 text-accent2-400 flex items-center justify-center flex-shrink-0">
                         <Icon className="w-4 h-4" />
                       </div>
                       <p className="text-sm text-white/90 pt-1.5">{f.label}</p>
@@ -496,7 +503,7 @@ export default function Home() {
       </section>
 
       {/* Pricing */}
-      <section id="pricing" className="py-20 bg-gray-50">
+      <section id="pricing" className="py-20 bg-gray-50 dark:bg-background">
         <div className="max-w-5xl mx-auto px-6">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -511,7 +518,7 @@ export default function Home() {
             <h2 className="text-3xl font-bold text-brand mb-3">
               Simple, pay-as-you-learn
             </h2>
-            <p className="text-gray-600 max-w-xl mx-auto">
+            <p className="text-gray-600 dark:text-muted-foreground max-w-xl mx-auto">
               Start with a single session or save with a bundle. Cancel anytime.
             </p>
           </motion.div>
@@ -527,7 +534,7 @@ export default function Home() {
                 className={`rounded-3xl p-8 border ${
                   plan.highlight
                     ? 'bg-brand text-white border-brand shadow-xl'
-                    : 'bg-white border-gray-200'
+                    : 'bg-white dark:bg-card border-gray-200 dark:border-border'
                 }`}
               >
                 {plan.highlight && (
@@ -593,7 +600,7 @@ export default function Home() {
               </motion.div>
             ))}
           </div>
-          <p className="text-center text-xs text-gray-500 mt-6">
+          <p className="text-center text-xs text-gray-500 dark:text-muted-foreground mt-6">
             Payments processed via Stripe (international) or Flutterwave
             (Africa).
           </p>
@@ -601,7 +608,7 @@ export default function Home() {
       </section>
 
       {/* Testimonials */}
-      <section className="py-20 bg-white">
+      <section className="py-20 bg-white dark:bg-card">
         <div className="max-w-7xl mx-auto px-6">
           <div className="grid md:grid-cols-2 gap-8 md:gap-16 items-center">
             <motion.div
@@ -616,7 +623,7 @@ export default function Home() {
               <h2 className="text-3xl font-bold text-brand mb-3">
                 Real families. Real progress.
               </h2>
-              <p className="text-gray-600">
+              <p className="text-gray-600 dark:text-muted-foreground">
                 Parents and students across the UK, Canada, USA, and Nigeria
                 trust DoLearn&apos;s pairing team to get the match right.
               </p>
@@ -634,7 +641,7 @@ export default function Home() {
       </section>
 
       {/* FAQ */}
-      <section id="faq" className="py-20 bg-gray-50">
+      <section id="faq" className="py-20 bg-gray-50 dark:bg-background">
         <div className="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-8 md:gap-16">
           <motion.div
             initial={{ opacity: 0, x: -30 }}
@@ -648,7 +655,7 @@ export default function Home() {
             <h2 className="text-3xl font-bold text-brand mb-3">
               Questions parents ask us
             </h2>
-            <p className="text-gray-600">
+            <p className="text-gray-600 dark:text-muted-foreground">
               Everything you want to know before your child&apos;s first
               session.
             </p>
@@ -663,14 +670,14 @@ export default function Home() {
             <Accordion type="single" collapsible className="space-y-3">
               <AccordionItem
                 value="q1"
-                className="border-none rounded-lg bg-white"
+                className="border-none rounded-lg bg-white dark:bg-card border dark:border-border"
               >
                 <AccordionTrigger className="px-6 rounded-md hover:no-underline text-left">
-                  <span className="font-semibold text-gray-900">
+                  <span className="font-semibold text-gray-900 dark:text-foreground">
                     How does the pairing actually work?
                   </span>
                 </AccordionTrigger>
-                <AccordionContent className="text-gray-600 px-6 pb-4">
+                <AccordionContent className="text-gray-600 dark:text-muted-foreground px-6 pb-4">
                   You fill a short intake for your child. A member of the
                   DoLearn team reviews it and hand-picks the best-matched
                   teacher based on subject, availability, and learning style —
@@ -679,14 +686,14 @@ export default function Home() {
               </AccordionItem>
               <AccordionItem
                 value="q2"
-                className="border-none rounded-lg bg-white"
+                className="border-none rounded-lg bg-white dark:bg-card border dark:border-border"
               >
                 <AccordionTrigger className="px-6 rounded-md hover:no-underline text-left">
-                  <span className="font-semibold text-gray-900">
+                  <span className="font-semibold text-gray-900 dark:text-foreground">
                     What subjects do you support?
                   </span>
                 </AccordionTrigger>
-                <AccordionContent className="text-gray-600 px-6 pb-4">
+                <AccordionContent className="text-gray-600 dark:text-muted-foreground px-6 pb-4">
                   Maths, English, Sciences, Coding, Music, French, SAT prep, and
                   more. If we don&apos;t have a teacher for your subject, we&apos;ll tell
                   you on the spot.
@@ -694,14 +701,14 @@ export default function Home() {
               </AccordionItem>
               <AccordionItem
                 value="q3"
-                className="border-none rounded-lg bg-white"
+                className="border-none rounded-lg bg-white dark:bg-card border dark:border-border"
               >
                 <AccordionTrigger className="px-6 rounded-md hover:no-underline text-left">
-                  <span className="font-semibold text-gray-900">
+                  <span className="font-semibold text-gray-900 dark:text-foreground">
                     What if the teacher isn&apos;t a good fit?
                   </span>
                 </AccordionTrigger>
-                <AccordionContent className="text-gray-600 px-6 pb-4">
+                <AccordionContent className="text-gray-600 dark:text-muted-foreground px-6 pb-4">
                   Tell us. We&apos;ll re-pair your child with another teacher — no
                   friction, no extra charge. That&apos;s the point of the pairing
                   model.
@@ -709,14 +716,14 @@ export default function Home() {
               </AccordionItem>
               <AccordionItem
                 value="q4"
-                className="border-none rounded-lg bg-white"
+                className="border-none rounded-lg bg-white dark:bg-card border dark:border-border"
               >
                 <AccordionTrigger className="px-6 rounded-md hover:no-underline text-left">
-                  <span className="font-semibold text-gray-900">
+                  <span className="font-semibold text-gray-900 dark:text-foreground">
                     How are sessions conducted?
                   </span>
                 </AccordionTrigger>
-                <AccordionContent className="text-gray-600 px-6 pb-4">
+                <AccordionContent className="text-gray-600 dark:text-muted-foreground px-6 pb-4">
                   Every session is live and 1-on-1 on Google Meet. A join button
                   appears in your dashboard before the session starts — no extra
                   apps needed.
@@ -724,14 +731,14 @@ export default function Home() {
               </AccordionItem>
               <AccordionItem
                 value="q5"
-                className="border-none rounded-lg bg-white"
+                className="border-none rounded-lg bg-white dark:bg-card border dark:border-border"
               >
                 <AccordionTrigger className="px-6 rounded-md hover:no-underline text-left">
-                  <span className="font-semibold text-gray-900">
+                  <span className="font-semibold text-gray-900 dark:text-foreground">
                     How do payments work?
                   </span>
                 </AccordionTrigger>
-                <AccordionContent className="text-gray-600 px-6 pb-4">
+                <AccordionContent className="text-gray-600 dark:text-muted-foreground px-6 pb-4">
                   Pay per session or buy a bundle. International parents use
                   Stripe; parents in Africa can pay via Flutterwave in local
                   currency.
@@ -743,7 +750,7 @@ export default function Home() {
       </section>
 
       {/* Final CTA */}
-      <section className="bg-accent2-100 relative py-12 lg:py-0">
+      <section className="bg-accent2-100 dark:bg-gradient-to-br dark:from-brand-900 dark:to-background relative py-12 lg:py-0">
         <div className="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-8 md:gap-16">
           <motion.div
             initial={{ opacity: 0, x: -40 }}
@@ -752,11 +759,11 @@ export default function Home() {
             transition={{ duration: 0.8 }}
             className="flex flex-col justify-center"
           >
-            <h2 className="text-3xl font-semibold text-gray-900 mb-3">
+            <h2 className="text-3xl font-semibold text-gray-900 dark:text-foreground mb-3">
               Ready to find the right teacher for your{' '}
               <span className="text-brand">child?</span>
             </h2>
-            <p className="text-gray-700 mb-6 max-w-md">
+            <p className="text-gray-700 dark:text-foreground/90 mb-6 max-w-md">
               Fill a short intake. We&apos;ll take it from there.
             </p>
             <div className="flex gap-3">
@@ -792,7 +799,7 @@ export default function Home() {
       </section>
 
       {/* Newsletter */}
-      <section className="bg-gray-100">
+      <section className="bg-gray-100 dark:bg-secondary">
         <div className="max-w-7xl mx-auto px-6 py-8">
           <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
             <Image
@@ -801,18 +808,18 @@ export default function Home() {
               className="w-[150px] h-[28px]"
             />
             <div className="text-center md:text-left">
-              <h3 className="font-semibold text-gray-800">
+              <h3 className="font-semibold text-gray-800 dark:text-foreground">
                 DoLearn updates, once a week
               </h3>
-              <p className="text-sm text-gray-500">
+              <p className="text-sm text-gray-500 dark:text-muted-foreground">
                 New teacher stories, learning tips, product updates. No spam.
               </p>
             </div>
-            <form className="flex flex-col sm:flex-row items-center bg-white rounded-full p-1 shadow-sm">
+            <form className="flex flex-col sm:flex-row items-center bg-white dark:bg-card rounded-full p-1 shadow-sm">
               <input
                 type="email"
                 placeholder="your@email.com"
-                className="flex-1 w-full px-4 py-2 text-sm outline-none rounded-full"
+                className="flex-1 w-full px-4 py-2 text-sm outline-none rounded-full bg-transparent dark:text-foreground dark:placeholder:text-muted-foreground"
               />
               <button
                 type="submit"
@@ -835,14 +842,14 @@ export default function Home() {
                 alt="DoLearn"
                 className="w-[160px] h-[30px] mb-4"
               />
-              <p className="text-sm text-gray-500 leading-relaxed max-w-xs">
+              <p className="text-sm text-gray-500 dark:text-muted-foreground leading-relaxed max-w-xs">
                 Connecting international students with hand-picked teachers for
                 live 1-on-1 sessions on Google Meet.
               </p>
             </div>
             <div>
               <h4 className="text-white font-semibold mb-4">Product</h4>
-              <ul className="space-y-2 text-sm text-gray-500">
+              <ul className="space-y-2 text-sm text-gray-500 dark:text-muted-foreground">
                 <li className="hover:text-white cursor-pointer">
                   <Link href="#how-it-works">How it works</Link>
                 </li>
@@ -856,21 +863,21 @@ export default function Home() {
             </div>
             <div>
               <h4 className="text-white font-semibold mb-4">Teachers</h4>
-              <ul className="space-y-2 text-sm text-gray-500">
+              <ul className="space-y-2 text-sm text-gray-500 dark:text-muted-foreground">
                 <li className="hover:text-white cursor-pointer">Apply to teach</li>
                 <li className="hover:text-white cursor-pointer">Teacher login</li>
               </ul>
             </div>
             <div>
               <h4 className="text-white font-semibold mb-4">Support</h4>
-              <ul className="space-y-2 text-sm text-gray-500">
+              <ul className="space-y-2 text-sm text-gray-500 dark:text-muted-foreground">
                 <li className="hover:text-white cursor-pointer">Contact</li>
                 <li className="hover:text-white cursor-pointer">Terms</li>
                 <li className="hover:text-white cursor-pointer">Privacy</li>
               </ul>
             </div>
           </div>
-          <div className="border-t border-gray-800 mt-12 pt-6 text-center text-xs text-gray-600">
+          <div className="border-t border-gray-800 mt-12 pt-6 text-center text-xs text-gray-600 dark:text-muted-foreground">
             DoLearn © {new Date().getFullYear()} · All rights reserved
           </div>
         </div>
