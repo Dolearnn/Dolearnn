@@ -142,8 +142,6 @@ The platform includes monthly reporting for:
 - **Theme:** `next-themes`
 - **Deployment target:** Netlify with `@netlify/plugin-nextjs`
 
-Supabase is already installed as a dependency, but the current app still uses mock/local browser storage rather than a live database.
-
 ## Project Structure
 
 ```txt
@@ -273,7 +271,7 @@ Important backend rules:
 
 ## Deployment
 
-This project is configured for Netlify.
+This project is deployed on Netlify and includes the Netlify build configuration in `netlify.toml`.
 
 `netlify.toml` uses:
 
@@ -286,7 +284,7 @@ publish = ".next"
 package = "@netlify/plugin-nextjs"
 ```
 
-To deploy:
+For future redeploys:
 
 1. Push the repository to GitHub, GitLab, or Bitbucket.
 2. Connect the repository to Netlify.
