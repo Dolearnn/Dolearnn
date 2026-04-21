@@ -2,7 +2,7 @@
 
 DoLearn is a tutoring platform for families, teachers, and administrators. Families create student profiles, share learning needs and availability, and track lessons. Teachers manage assigned students, propose class times, submit notes, confirm attendance, and review expected payouts. Admins manage the teacher roster, match students to teachers, assign meeting links, monitor sessions, review cancellations, and prepare monthly teacher payments.
 
-The current project is a frontend-first MVP. It uses mock data and browser local storage to simulate the main product workflows while the backend is still being planned.
+The current frontend is an MVP. It uses mock data and browser local storage to simulate the main product workflows while the backend is being planned.
 
 ## Who It Is For
 
@@ -140,27 +140,36 @@ The platform includes monthly reporting for:
 - **Forms and validation:** React Hook Form and Zod
 - **Icons:** Lucide React
 - **Theme:** `next-themes`
-- **Deployment target:** Netlify with `@netlify/plugin-nextjs`
+- **Deployment target:** Vercel
 
 ## Project Structure
 
 ```txt
-app/                  Next.js app routes
-components/           Reusable UI, dashboard, and form components
-hooks/                Shared React hooks
-lib/mock/             Mock platform data
-lib/store/            Client-side mock store and role-specific selectors
-lib/types/            Shared TypeScript types and display helpers
-public/               Static public assets
+frontend/             Next.js app deployed on Vercel
+  app/                Next.js app routes
+  components/         Reusable UI, dashboard, and form components
+  hooks/              Shared React hooks
+  lib/mock/           Mock platform data
+  lib/store/          Client-side mock store and role-specific selectors
+  lib/types/          Shared TypeScript types and display helpers
+  public/             Static public assets
+
+backend/              Express API scaffold for the future backend
+  src/                API source code
+  src/routes/         Route modules
+  src/config/         Environment/config helpers
+  prisma/             PostgreSQL schema managed by Prisma
 ```
 
 Important files:
 
-- `lib/types/index.ts` defines the product data model.
-- `lib/mock/index.ts` contains starter data for families, teachers, sessions, notes, payments, and reports.
-- `lib/store/client.ts` stores temporary local changes in browser local storage.
-- `lib/store/admin.ts`, `lib/store/family.ts`, and `lib/store/teacher.ts` expose role-specific data helpers.
-- `components/dashboard/DashboardShell.tsx` controls dashboard navigation for each role.
+- `frontend/lib/types/index.ts` defines the frontend product data model.
+- `frontend/lib/mock/index.ts` contains starter data for families, teachers, sessions, notes, payments, and reports.
+- `frontend/lib/store/client.ts` stores temporary local changes in browser local storage.
+- `frontend/lib/store/admin.ts`, `frontend/lib/store/family.ts`, and `frontend/lib/store/teacher.ts` expose role-specific data helpers.
+- `frontend/components/dashboard/DashboardShell.tsx` controls dashboard navigation for each role.
+- `backend/src/server.ts` is the backend API entry point.
+- `backend/prisma/schema.prisma` defines the first backend database schema.
 
 ## Local Development
 
@@ -171,13 +180,26 @@ Important files:
 
 ### Install Dependencies
 
+Frontend:
+
 ```bash
+cd frontend
+npm install
+```
+
+Backend:
+
+```bash
+cd backend
 npm install
 ```
 
 ### Start The Development Server
 
+Frontend:
+
 ```bash
+cd frontend
 npm run dev
 ```
 
@@ -187,27 +209,53 @@ Then open:
 http://localhost:3000
 ```
 
-### Run Type Checking
+Backend:
 
 ```bash
+cd backend
+npm run dev
+```
+
+Then open:
+
+```txt
+http://localhost:4000/api/health
+```
+
+### Run Type Checking
+
+Frontend:
+
+```bash
+cd frontend
+npm run typecheck
+```
+
+Backend:
+
+```bash
+cd backend
 npm run typecheck
 ```
 
 ### Run Linting
 
 ```bash
+cd frontend
 npm run lint
 ```
 
 ### Build For Production
 
 ```bash
+cd frontend
 npm run build
 ```
 
 ### Start The Production Build Locally
 
 ```bash
+cd frontend
 npm run start
 ```
 
@@ -215,8 +263,8 @@ npm run start
 
 This version does not yet use a real backend for most workflows. It combines:
 
-- Static mock data from `lib/mock/index.ts`
-- Browser local storage from `lib/store/client.ts`
+- Static mock data from `frontend/lib/mock/index.ts`
+- Browser local storage from `frontend/lib/store/client.ts`
 
 That means many actions persist only in the current browser, for example:
 
@@ -235,7 +283,15 @@ If local storage is cleared or another browser is used, those local changes will
 
 ## Backend Plan
 
-When the backend is implemented, the local storage layer should be replaced with real database-backed services.
+When the backend is implemented, the local storage layer should be replaced with real database-backed services in `backend/`.
+
+Planned backend stack:
+
+- Express.js
+- TypeScript
+- PostgreSQL
+- Prisma
+- Zod validation
 
 Recommended backend entities:
 
@@ -271,24 +327,13 @@ Important backend rules:
 
 ## Deployment
 
-This project is deployed on Netlify and includes the Netlify build configuration in `netlify.toml`.
-
-`netlify.toml` uses:
-
-```toml
-[build]
-command = "npx next build"
-publish = ".next"
-
-[[plugins]]
-package = "@netlify/plugin-nextjs"
-```
+The frontend is deployed on Vercel.
 
 For future redeploys:
 
 1. Push the repository to GitHub, GitLab, or Bitbucket.
-2. Connect the repository to Netlify.
-3. Let Netlify use the build settings from `netlify.toml`.
+2. Connect the repository to Vercel.
+3. Set the Vercel root directory to `frontend`.
 4. Add environment variables later when the real backend is connected.
 
 ## Product Status
