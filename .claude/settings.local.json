@@ -20,7 +20,9 @@
       "Bash(nslookup ep-spring-mouse-amm1vkfz.c-5.us-east-1.aws.neon.tech)",
       "Bash(curl -v --max-time 10 telnet://ep-spring-mouse-amm1vkfz.c-5.us-east-1.aws.neon.tech:5432)",
       "Bash(curl -v --max-time 15 --connect-timeout 15 telnet://ep-spring-mouse-amm1vkfz-pooler.c-5.us-east-1.aws.neon.tech:5432)",
-      "Bash(npx prisma *)"
+      "Bash(npx prisma *)",
+      "Bash(rm -- avatar2.jpg avatar3.jpg exam-img-1.png exam-img-2.png exam-svg.svg goal.svg graduation.svg hero-img.png instant-result.svg jamb.png logo.png neco.png online-img2.png practice.svg right-icon.png sat.png student-img.jpg waec.png)",
+      "Read(//c/c/Users/PETER/Desktop/DDolreann/Dolearnn/frontend/assests/**)"
     ]
   }
 }
